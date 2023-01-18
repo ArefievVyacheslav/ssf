@@ -40,5 +40,5 @@ jobs:
             npm prune # we remove any unused dependencies
             npm install # we install any missing dependencies
             npm run build # we build our app
-            pm2 start npm --name "nuxt new" -- start --node-args="--max-old-space-size=4096"
+            pm2 start npm --name "ssf" -- start --node-args="--max-old-space-size=4096"
   #          pm2 reload all # we reload the app via PM2
