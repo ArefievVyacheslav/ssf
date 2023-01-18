@@ -19,5 +19,6 @@ module.exports = {
     'vue/valid-template-root': 'off',
     'vue/order-in-components': 'off',
     'no-return-assign': 'off',
+    'array-callback-return': 'off',
   },
 }

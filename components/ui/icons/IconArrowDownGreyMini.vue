@@ -10,3 +10,10 @@ export default {
   name: "IconArrowDownGreyMini"
 };
 </script>
+
+<style scoped lang="scss">
+  path:hover {
+    fill: #303030 !important;
+  }
+
+</style>
