@@ -3,10 +3,12 @@
     .container.df.jcsb
       ChoosingCountryProducts
       .menu-top__link-wrapper.df.aic
-        nuxt-link.menu-top__links(
-          v-for="link,idx in links" :key="link.anchor" :to="link.href" :class="{ 'mr16px': idx !== links.length - 1 }"
+        nuxt-link.menu-top__links.hover-text-dark(
+          v-for="link,idx in links.slice(0,2)" :key="link.anchor" :to="link.href" :class="{ 'mr16px': idx !== links.length - 1, 'help-dropdown': idx === links.length - 1 }"
         ) {{ link.anchor }}
-        IconArrowDownGreyMini.cp.ml7px
+        .df.aic.cp
+          span.menu-top__links.hover-text-dark {{ links[links.length - 1].anchor }}
+          IconArrowDownGreyMini.cp.ml7px
 
 </template>
 
@@ -21,7 +23,7 @@ export default {
     links: [
       { anchor: 'Способы оплаты', href: '/sposoby-oplaty' },
       { anchor: 'Доставка', href: '/dostavka' },
-      { anchor: 'Помощь', href: '/pomoshch' },
+      { anchor: 'Помощь' },
     ]
   })
 }
@@ -67,6 +69,10 @@ export default {
 
   .cp {
     cursor: pointer;
+  }
+
+  .hover-text-dark:hover {
+    color: #303030 !important;
   }
 
 </style>

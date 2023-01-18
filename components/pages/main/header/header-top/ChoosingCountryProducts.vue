@@ -1,10 +1,10 @@
 <template lang="pug">
-  .position-relative
+  .pos-rel
     .df.aic.cp(@click="isShowDropdown = !isShowDropdown")
       component(:is="getIconLanguage(currentLanguage)")
-      .language.ml6px {{ currentLanguage.reduction }}
+      .language.ml6px.hover-text-dark {{ currentLanguage.reduction }}
 
-    .position-absolute.t25(v-if="isShowDropdown")
+    .pos-abs.t25(v-if="isShowDropdown")
       DropDown(@close="isShowDropdown = false" :styles="{ padding: '8px 12px 12px 12px', display: 'inline-block' }")
         .df.aic
           span.language-header.toe.wsn.oh Выбор страны
@@ -12,7 +12,6 @@
           b-tooltip(target="tooltip-dropdown-language" placement="right" delay="100")
             | Чтобы не выбирать одни и те же <br> данные каждый раз, вы можете <br> настроить их у &nbsp
             nuxt-link.tooltip-link(to="/lk") себя в профиле
-
 
         .language-item.cp(
           v-for="langObj,idx in languages" :key="idx" @click="currentLanguage = langObj"
@@ -26,16 +25,23 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import IconRuCountry from "@/components/ui/icons/IconRuCountry.vue";
-import IconKzCountry from "@/components/ui/icons/IconKzCountry.vue";
-import IconRbCountry from "@/components/ui/icons/IconRbCountry.vue";
+import IconRuCountry from "@/components/ui/icons/country/IconRuCountry.vue";
+import IconKzCountry from "@/components/ui/icons/country/IconKzCountry.vue";
+import IconRbCountry from "@/components/ui/icons/country/IconRbCountry.vue";
 import DropDown from "@/components/ui/blocks/DropDown.vue";
 import IconTooltip from "@/components/ui/icons/IconTooltip.vue";
 import IconCheckMarkBlue from "@/components/ui/icons/IconCheckMarkBlue.vue";
+import IconAmCountry from "@/components/ui/icons/country/IconAmCountry.vue";
+import IconAzCountry from "@/components/ui/icons/country/IconAzCountry.vue";
+import IconKgCountry from "@/components/ui/icons/country/IconKgCountry.vue";
+import IconMdCountry from "@/components/ui/icons/country/IconMdCountry.vue";
+import IconTjCountry from "@/components/ui/icons/country/IconTjCountry.vue";
+import IconTmCountry from "@/components/ui/icons/country/IconTmCountry.vue";
+import IconUzCountry from "@/components/ui/icons/country/IconUzCountry.vue";
 
 export default {
   name: "choosingCountryProducts",
-  components: { IconCheckMarkBlue, IconTooltip, DropDown, IconRbCountry, IconKzCountry, IconRuCountry },
+  components: { IconUzCountry, IconTmCountry, IconTjCountry, IconMdCountry, IconKgCountry, IconAzCountry, IconAmCountry, IconCheckMarkBlue, IconTooltip, DropDown, IconRbCountry, IconKzCountry, IconRuCountry },
   data () {
     return {
       languages: [
@@ -57,6 +63,7 @@ export default {
   watch: {
     currentLanguage: {
       handler () {
+        this.setFilterParam()
         this.setFindParam()
         this.setUrlParam()
       },
@@ -64,9 +71,15 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('productFilters', ['SET_FIND_PARAM']),
-    ...mapMutations('categoryUrl', ['SET_URL_PARAM']),
+    ...mapMutations('filters', ['SET_FILTER_PARAM', 'SET_FIND_PARAM']),
+    ...mapMutations('catalog', ['SET_URL_PARAM']),
     getIconLanguage: langObj => `Icon${langObj.reduction.charAt(0).toUpperCase() + langObj.reduction.slice(1)}Country`,
+    setFilterParam () {
+      this.SET_FILTER_PARAM({
+        param: 'country',
+        value: this.currentLanguage.country
+      })
+    },
     setFindParam () {
       this.SET_FIND_PARAM({
         param: 'delivery',
@@ -75,14 +88,24 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        idx: 'end',
+        param: '9country',
         value: this.currentLanguage.reduction === 'ru' ? '' : this.currentLanguage.reduction
+      })
+    },
+    getCountry () {
+      this.languages.forEach(langObj => {
+        if (this.$route.path.includes(langObj.reduction)) {
+          this.SET_FILTER_PARAM({ param: "country", value: langObj.country })
+          this.currentLanguage = langObj
+        }
       })
     }
   },
-  mounted () {
+  created () {
+    this.setFilterParam()
     this.setFindParam()
     this.setUrlParam()
+    this.getCountry()
   }
 };
 </script>
@@ -144,11 +167,11 @@ export default {
     border-radius: 6px;
   }
 
-  .position-relative {
+  .pos-rel {
     position: relative;
   }
 
-  .position-absolute {
+  .pos-abs {
     position: absolute;
   }
 
