@@ -24,21 +24,18 @@ export default {
   serverMiddleware: [],
   router: { prefetchLinks: false },
   loading: { color: '#05c5ff' },
-  // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    'normalize.css',
-    // './assets/scss/global-styles.scss'
+    'normalize.css'
   ],
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  styleResources: {
+    scss: ['~/assets/styles/main.scss']
+  },
   plugins: [],
-  // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module'
   ],
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
@@ -50,6 +47,12 @@ export default {
     'nuxt-webfontloader',
     '@nuxtjs/style-resources'
   ],
+  bootstrapVue: {
+    bootstrapCSS: false,
+    bootstrapVueCSS: false,
+    componentPlugins: ['Tooltip'],
+    directivePlugins: []
+  },
   webfontloader: {
     events: false,
     google: {
@@ -57,12 +60,9 @@ export default {
     },
     timeout: 5000
   },
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: 'http://localhost:3002',
   },
-  // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     optimizeCss: false,
     filenames: {
@@ -198,7 +198,6 @@ export default {
       config.module.rules.push(svgRule) // Actually add the rule
     }
   },
-  // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
       lang: 'en'

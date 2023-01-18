@@ -1,14 +1,18 @@
 <template lang="pug">
-  h1.test Test
+  h2 main header
+
 </template>
 
 <script>
 export default {
   name: 'IndexPage',
+  layout: 'default'
 }
 </script>
 
-<style lang="stylus">
-.test
-  font-size 40px
+<style lang="scss">
+  .test {
+    font-size: 40px;
+  }
+
 </style>
