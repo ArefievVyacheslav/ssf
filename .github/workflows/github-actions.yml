@@ -22,3 +22,24 @@ jobs:
         run: npm run build
       - name: lintfix
         run: npm run lintfix
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: init # this job depends on "test" having finished
+#    if: github.ref == 'refs/heads/master' # we tell Github to only execute this step if we're on our master branch (so we don't put unfinished branches in production)
+    steps:
+      - name: deploy
+        uses: appleboy/ssh-action@master # An action made to control Linux servers
+        with: # We set all our secrets here for the action, these won't be shown in the action logs
+          host: ${{ secrets.SS_HOST }}
+          username: ${{ secrets.SS_USER }}
+          password: ${{ secrets.SS_PASS }}
+          port: ${{ secrets.SS_PORT }}
+          script: |
+            cd /home/ssf/ # we move into our app's folder
+            git pull # we pull any changes from git
+            npm prune # we remove any unused dependencies
+            npm install # we install any missing dependencies
+            npm run build # we build our app
+            pm2 start npm --name "nuxt" -- start --node-args="--max-old-space-size=4096"
+  #          pm2 reload all # we reload the app via PM2
