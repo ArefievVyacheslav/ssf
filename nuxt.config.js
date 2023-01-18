@@ -33,15 +33,11 @@ export default {
   plugins: [],
   components: true,
   buildModules: [
-    // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module'
   ],
   modules: [
-    // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
-    // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
     'nuxt-trailingslash-module',
     'nuxt-webfontloader',

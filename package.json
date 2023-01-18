@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt --port=1111",
+    "dev": "nuxt --port=3003",
     "build": "nuxt build",
-    "start": "nuxt start --port=1111",
+    "start": "nuxt start --port=3003",
     "generate": "nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint:prettier": "prettier --check .",
