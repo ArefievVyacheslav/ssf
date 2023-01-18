@@ -32,9 +32,11 @@ export default {
 
 <style lang="scss">
   .dropdown {
+    position: absolute;
     background: #FFFFFF;
     box-shadow: 0 0 30px rgba(47, 54, 70, 0.3);
     border-radius: 10px;
+    z-index: 9999999;
   }
 
 </style>

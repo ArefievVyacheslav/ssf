@@ -35,10 +35,10 @@ jobs:
           password: ${{ secrets.SS_PASS }}
           port: ${{ secrets.SS_PORT }}
           script: |
-            cd /home/ssf/ # we move into our app's folder
-            git pull # we pull any changes from git
-            npm prune # we remove any unused dependencies
-            npm install # we install any missing dependencies
-            npm run build # we build our app
-            pm2 reload ssf # we reload the app via PM2
+            cd /home/ssf/
+            git pull
+            npm prune
+            npm install
+            npm run build
+            pm2 reload ssf
 #            pm2 start npm --name "ssf" -- start --node-args="--max-old-space-size=4096"
