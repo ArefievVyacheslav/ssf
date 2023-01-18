@@ -36,6 +36,7 @@ jobs:
           port: ${{ secrets.SS_PORT }}
           script: |
             cd /home/ssf/
+            git checkout -f
             git pull
             npm prune
             npm install
