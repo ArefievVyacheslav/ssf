@@ -2,7 +2,7 @@
   .pos-rel
     .df.aic.cp(@click="isShowDropdown = !isShowDropdown")
       component(:is="getIconLanguage(currentLanguage)")
-      .language.ml6px.hover-text-dark {{ currentLanguage.reduction }}
+      .language.ml6px.hover-text-dark(:class="{ 'text-dark': isShowDropdown }") {{ currentLanguage.reduction }}
 
     .pos-abs.t25(v-if="isShowDropdown")
       DropDown(@close="isShowDropdown = false" :styles="{ padding: '8px 12px 12px 12px', display: 'inline-block' }")
@@ -15,7 +15,7 @@
 
         .language-item.cp(
           v-for="langObj,idx in languages" :key="idx" @click="currentLanguage = langObj"
-          :class="{ 'language-item-active': langObj.reduction === currentLanguage.reduction, mt12px: idx === 0, 'mt3px': idx !== 0 }"
+          :class="{ 'language-item-active': langObj.reduction === currentLanguage.reduction, mt12px: idx === 0, mt3px: idx !== 0 }"
         )
           component(:is="getIconLanguage(langObj)")
           span.country(:class="{ 'country-active': langObj.reduction === currentLanguage.reduction }") {{ langObj.country }}

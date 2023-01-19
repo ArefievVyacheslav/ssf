@@ -15,7 +15,8 @@ export default {
   methods: {
     handleClick (event) {
       let isDropdownClickAway = true
-      event.path.forEach(el => {
+      const path = event.path || (event.composedPath && event.composedPath())
+      path.forEach(el => {
         if (el.className === 'dropdown') isDropdownClickAway = false
       })
       if (isDropdownClickAway) this.$emit('close')

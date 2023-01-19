@@ -6,7 +6,10 @@ export const state = () => ({
 // }
 
 export const mutations = {
-  SET_URL_PARAM: (state, paramObj) => state.urlObj[paramObj.param] = paramObj.value
+  SET_URL_PARAM: (state, paramObj) => state.urlObj = {
+    ...state.urlObj,
+    [ paramObj.param ]: paramObj.value
+  }
 }
 
 export const getters = {
@@ -14,8 +17,5 @@ export const getters = {
     return Object.keys(state.urlObj).sort().reduce((acc, param) => {
       return acc += state.urlObj[ param ] + '/'
     }, '/catalog/').replaceAll('//', '')
-    // return "/catalog/" + Object.keys(state.url)
-    //   .sort()
-    //   .join("/");
   }
 }
