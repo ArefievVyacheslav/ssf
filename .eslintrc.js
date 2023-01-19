@@ -18,7 +18,8 @@ module.exports = {
     'vue/require-default-prop': 'off',
     'vue/valid-template-root': 'off',
     'vue/order-in-components': 'off',
-    'no-return-assign': 'off',
+    'vue/require-prop-types': 'off',
     'array-callback-return': 'off',
+    'no-return-assign': 'off',
   },
 }

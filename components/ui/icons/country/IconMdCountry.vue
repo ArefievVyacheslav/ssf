@@ -1,5 +1,5 @@
 <template>
-  <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g clip-path="url(#clip0_480_1045)">
       <path fill-rule="evenodd" clip-rule="evenodd" d="M0 0.359375H5.33437V16.3594H0V0.359375Z" fill="#00319C"/>
       <path fill-rule="evenodd" clip-rule="evenodd" d="M5.33447 0.359375H10.6657V16.3594H5.33447V0.359375Z" fill="#FFDE00"/>
