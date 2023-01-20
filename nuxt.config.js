@@ -22,7 +22,7 @@ export default {
   },
   rootDir: __dirname,
   serverMiddleware: [],
-  router: { prefetchLinks: false },
+  router: { prefetchLinks: false, middleware: [ 'changeRoute' ] },
   loading: { color: '#05c5ff' },
   css: [
     'normalize.css'
@@ -30,12 +30,15 @@ export default {
   styleResources: {
     scss: ['~/assets/styles/main.scss']
   },
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/persistedState.client.js', ssr: false }
+  ],
   components: true,
   buildModules: [
     '@nuxtjs/eslint-module'
   ],
   modules: [
+    'nuxt-client-init-module',
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',

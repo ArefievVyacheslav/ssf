@@ -11,7 +11,7 @@
           span.menu-top__links.hover-text-dark {{ links[links.length - 1].anchor }}
           IconArrowDownGreyMini.cp.ml7px(:class="{ 'icon-arrow-down-grey-mini-active': isShowDropdown }")
 
-        .pos-abs.t27px.r237px(v-if="isShowDropdown")
+        .pos-abs.t27px.r237px(v-if="isShowDropdown" @click="isShowDropdown = false")
           DropDown(@close="isShowDropdown = false" :styles="{ padding: '8px 12px 12px 12px', width: '213px' }")
             span.help-dropdown__header.toe.wsn.oh Помощь
             nuxt-link.help-dropdown__link.db.tdn.cp(
@@ -72,7 +72,6 @@ export default {
       }
 
       .icon-arrow-down-grey-mini-active {
-        margin-top: 1px;
         transform: rotateX(180deg);
         transition: .4s;
       }

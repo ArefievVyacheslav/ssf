@@ -14,7 +14,7 @@
             nuxt-link.tooltip-link(to="/lk") себя в профиле
 
         .language-item.cp(
-          v-for="langObj,idx in languages" :key="idx" @click="currentLanguage = langObj"
+          v-for="langObj,idx in languages" :key="idx" @click="currentLanguage = langObj; isShowDropdown = false"
           :class="{ 'language-item-active': langObj.reduction === currentLanguage.reduction, mt12px: idx === 0, mt3px: idx !== 0 }"
         )
           component(:is="getIconLanguage(langObj)")
