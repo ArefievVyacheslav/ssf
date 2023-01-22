@@ -94,8 +94,8 @@ export default {
     },
     getCountry () {
       this.languages.forEach(langObj => {
-        if (this.$route.path.includes(langObj.reduction)) {
-          this.SET_FILTER_PARAM({ param: "country", value: langObj.country })
+        if (this.$route.path.includes('/' + langObj.reduction)) {
+          this.SET_FILTER_PARAM({ param: 'country', value: langObj.country })
           this.currentLanguage = langObj
         }
       })

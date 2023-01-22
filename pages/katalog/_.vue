@@ -5,7 +5,7 @@
 
 <script>
 export default {
-  name: "_",
+  name: "category",
   layout: 'default'
 };
 </script>
