@@ -5,9 +5,10 @@
         nuxt-link.menu-links__logo.tdn(to="/") Sales Search
         MenuLinksCategoryChoice(v-if="$store.state.statistic.numberOfViews !== 1")
       .df.pos-rel
-        input.menu-search.mr25px
+        input.menu-search.mr25px(placeholder="Поиск")
         IconSearchMenuLinks.pos-abs.t6px.l8px
-        component(v-for="componentName in iconsComponents" :key="componentName" :is="componentName").cp.h36px-t1.hover-size-30px-t1
+        component(v-for="componentName in iconsComponents" :key="componentName" :is="componentName").hover-icon-menu-links.cp
+        .dreambox-counter.pos-abs.df.jcc.aic(v-if="true") 47
 
 </template>
 
@@ -40,7 +41,6 @@ export default {
       line-height: 29px;
       color: #212121;
     }
-
     .menu-search {
       width: 240px;
       padding: 10px 12px 10px 38px;
@@ -55,6 +55,32 @@ export default {
       letter-spacing: 0.02em;
       color: #303030;
       outline: none;
+    }
+    .menu-search:hover {
+      outline: 1px solid #DADEE7;
+    }
+    .menu-search:focus {
+      outline: 1px solid #2D78EA;
+    }
+    .hover-icon-menu-links:hover {
+      background: #DDE1E9;
+      border-radius: 10px;
+    }
+
+    .dreambox-counter {
+      width: 23px;
+      height: 16px;
+      top: 18px;
+      left: 362px;
+      background: #2D78EA;
+      border: 1px solid #EAECF1;
+      border-radius: 100px;
+      font-family: 'Inter', serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 10px;
+      line-height: 12px;
+      color: #FFFFFF;
     }
   }
 
@@ -78,14 +104,6 @@ export default {
   }
   .tdn {
     text-decoration: none;
-  }
-  .hover-size-30px-t1:hover {
-    height: 30px;
-    transition: 1s;
-  }
-  .h36px-t1 {
-    height: 36px;
-    transition: 1s;
   }
 
 </style>
