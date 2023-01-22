@@ -11,7 +11,8 @@ export const state = () => ({
 export const mutations = {
   SET_COLLECTION: (state, collection) => state.collection = collection,
   SET_FILTER_PARAM: (state, paramObj) => state.filterObj[paramObj.param] = paramObj.value,
-  SET_FIND_PARAM: (state, paramObj) => state.findObj[paramObj.param] = paramObj.value
+  SET_FIND_PARAM: (state, paramObj) => state.findObj[paramObj.param] = paramObj.value,
+  UNSET_FIND_PARAM: (state, paramObj) => delete state.findObj[paramObj.param]
 }
 
 export const getters = {

@@ -2,14 +2,14 @@
   .header-fv
     .container.df.fdc.jcc
       h1.header-fv__h1.m0.p0 Поиск скидок на бренды
-      h2.header-fv__desc.m0.p0.mt25px Все вещи из разделов скидок официальных магазинов
+      h2.header-fv__desc.p0 Вещи собраны из разделов скидок официальных магазинов
+       //ПЕРЕНЕСТИ В ОТДЕЛЬНЫЙ КОМПОНЕНТ КАК БУДЕТ ГОТОВА ВЁРСТКА
       .tabs.m0auto
         .category-tab.cp(
           v-for="categoryKey,idx in Object.keys(categories)" :key="categoryKey"
           :class="{ 'category-tab-active': categoryKey === currentCategory }" @click="currentCategory = categoryKey"
         )
           span.category-tab__category(:class="{ 'category-tab__category-active': categoryKey === currentCategory }") {{ categoryKey }}
-
 
 </template>
 
@@ -67,6 +67,7 @@ export default {
     }
 
     .header-fv__desc {
+      margin-top: 25px;
       font-family: 'Inter', serif;
       font-style: normal;
       font-weight: 500;

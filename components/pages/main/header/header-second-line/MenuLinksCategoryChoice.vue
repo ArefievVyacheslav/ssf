@@ -74,17 +74,6 @@ export default {
     letter-spacing: 0.02em;
     color: #303030;
 
-    .menu-links__icon-arrow-down {
-      top: 15px;
-      right: 13px;
-      transition: .3s;
-    }
-
-    .menu-links__icon-arrow-down-active {
-      transform: rotateX(180deg);
-      transition: .3s;
-    }
-
     .category-header {
       font-family: 'Inter',serif;
       font-style: normal;
@@ -132,6 +121,17 @@ export default {
 
   .menu-links__category-choice:hover svg .icon-arrow-down-grey-medium {
     fill: #303030 !important;
+  }
+
+  .menu-links__icon-arrow-down {
+    top: 15px;
+    right: 13px;
+    transition: .3s;
+  }
+
+  .menu-links__icon-arrow-down-active {
+    transform: rotateX(180deg);
+    transition: .3s;
   }
 
 </style>
