@@ -2,7 +2,7 @@
   div
     MenuTop
     MenuLinks
-    HeaderMiddleFirstView(v-if="$store.state.statistic.numberOfViews === 1")
+    HeaderMiddleFirstView(v-if="isShowHeaderFirstView")
     HeaderFilters
 
 </template>
@@ -15,7 +15,12 @@ import HeaderFilters from "@/components/pages/main/header/header-filters/HeaderF
 
 export default {
   name: 'HeaderMain',
-  components: { HeaderFilters, HeaderMiddleFirstView, MenuLinks, MenuTop }
+  components: { HeaderFilters, HeaderMiddleFirstView, MenuLinks, MenuTop },
+  computed: {
+    isShowHeaderFirstView () {
+      return this.$store.state.statistic.isFirstView || this.$route.path === '/'
+    }
+  }
 }
 </script>
 

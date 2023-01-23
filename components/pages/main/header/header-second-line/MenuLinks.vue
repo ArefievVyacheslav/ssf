@@ -3,7 +3,7 @@
     .container.df.jcsb
       .df
         nuxt-link.menu-links__logo.tdn(to="/") Sales Search
-        MenuLinksCategoryChoice(v-if="$store.state.statistic.numberOfViews !== 1")
+        MenuLinksCategoryChoice(v-if="isShowCategoryChoice")
       .df.pos-rel
         input.menu-search.mr25px(placeholder="Поиск")
         IconSearchMenuLinks.pos-abs.t6px.l8px
@@ -23,7 +23,12 @@ import MenuLinksCategoryChoice from "@/components/pages/main/header/header-secon
 export default {
   name: "MenuLinks",
   components: { MenuLinksCategoryChoice, IconAllMenuLinks, IconLkMenuLinks, IconDreamboxMenuLinks, IconJournalMenuLinks, IconSearchMenuLinks },
-  data: () => ({ iconsComponents: [ 'IconJournalMenuLinks', 'IconDreamboxMenuLinks', 'IconLkMenuLinks', 'IconAllMenuLinks' ] })
+  data: () => ({ iconsComponents: [ 'IconJournalMenuLinks', 'IconDreamboxMenuLinks', 'IconLkMenuLinks', 'IconAllMenuLinks' ] }),
+  computed: {
+    isShowCategoryChoice () {
+      return !this.$store.state.statistic.isFirstView && this.$route.path !== '/'
+    }
+  }
 };
 </script>
 

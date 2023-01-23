@@ -1,5 +1,6 @@
-// export const actions = {
-//   nuxtClientInit({ state, commit }, context) {
-//     if (!state.statistic.numberOfViews) commit('statistic/SET_NUMBER_VIEWS')
-//   }
-// }
+export const actions = {
+  nuxtServerInit({ commit }, { req }) {
+    if (this.$cookies.get('numberOfViews')) commit('statistic/SET_FIRST_VIEW')
+  },
+  // nuxtClientInit({ state, commit }, context) {}
+}
