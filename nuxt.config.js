@@ -4,6 +4,8 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default
 const isDev = process.env.NODE_ENV !== 'production'
 
 export default {
+  ssr: true,
+  target: 'server',
   mode: 'universal',
   ...(!isDev && {
     modern: 'client'
@@ -31,7 +33,6 @@ export default {
     scss: ['~/assets/styles/main.scss']
   },
   plugins: [
-    { src: '~/plugins/persistedState.client.js', ssr: false }
   ],
   components: true,
   buildModules: [
@@ -39,6 +40,7 @@ export default {
   ],
   modules: [
     'nuxt-client-init-module',
+    'cookie-universal-nuxt',
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     '@nuxtjs/pwa',

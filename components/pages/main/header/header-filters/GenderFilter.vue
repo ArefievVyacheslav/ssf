@@ -66,11 +66,11 @@ export default {
     setFilterParam () {
       this.SET_FILTER_PARAM({
         param: 'gender',
-        value: this.currentGender?.param?.gender
+        value: this.currentGender?.param.gender
       })
       this.SET_FILTER_PARAM({
         param: 'age',
-        value: this.currentGender.param.age
+        value: this.currentGender?.param.age
       })
     },
     unsetFilterParam () {
@@ -80,11 +80,11 @@ export default {
     setFindParam () {
       this.SET_FIND_PARAM({
         param: 'age',
-        value: this.currentGender.param.age || null
+        value: this.currentGender?.param.age || null
       })
-      if (this.currentGender.param.gender) this.SET_FIND_PARAM({
+      if (this.currentGender?.param.gender) this.SET_FIND_PARAM({
         param: 'gender',
-        value: this.currentGender.param.gender || null
+        value: this.currentGender?.param.gender || null
       })
     },
     unsetFindParam () {
@@ -94,7 +94,7 @@ export default {
     setUrlParam () {
       this.SET_URL_PARAM({
         param: '2gender',
-        value: this.currentGender.url
+        value: this.currentGender?.url
       })
     },
     unsetUrlParam () {

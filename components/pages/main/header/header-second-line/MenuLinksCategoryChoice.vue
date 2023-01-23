@@ -50,6 +50,7 @@ export default {
         if (this.$route.path.includes(cats[ catKey ])) this.SET_FILTER_PARAM({ param: 'category', value: catKey })
       })
       this.currentCategory = this.$store.state.filters.filterObj.category
+      if (!this.currentCategory) this.currentCategory = 'Одежда'
     }
   },
   created () {
