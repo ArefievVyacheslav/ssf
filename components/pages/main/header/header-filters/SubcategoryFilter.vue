@@ -94,7 +94,7 @@ export default {
       }, {})
     },
     subcategoryOptionsSearch () {
-      return this.$store.state.selects.selects.subcat.filter(subcatObj => subcatObj.subcategory.toLowerCase().includes(this.query))
+      return this.$store.state.selects.selects.subcat.filter(subcatObj => subcatObj.subcategory.toLowerCase().includes(this.query.toLowerCase()))
     },
     currentSubcategoryArrNameRus () {
       return this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory)
