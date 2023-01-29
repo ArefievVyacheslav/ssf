@@ -100,7 +100,7 @@ export default {
       return this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory)
     },
     currentSubcategoryArrNameEn () {
-      return this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategoryT.toLowerCase())
+      return this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory_t.toLowerCase())
     }
   },
   watch: {
@@ -159,7 +159,7 @@ export default {
     getSubcategory () {
       const subcatArr = []
       this.$store.state.selects.selects.subcat.forEach(subcatObj => {
-        if (this.$route.path.includes(subcatObj.subcategoryT.toLowerCase())) {
+        if (this.$route.path.includes(subcatObj.subcategory_t.toLowerCase())) {
           subcatArr.push(subcatObj)
         }
       })
