@@ -1,5 +1,5 @@
 <template lang="pug">
-  .filter__item.filter__item_gender.pos-rel.df.jcsb.aic.cp(@click="isShowGenderList = !isShowGenderList")
+  .filter__item.filter__item_hover.filter__item_gender.pos-rel.df.jcsb.aic.cp(@click="isShowGenderList = !isShowGenderList")
     h3.filter__name.filter__name_gender Пол
     .number-selected-options.ml6px(v-if="currentGender") 1
     IconArrowDownGreyMedium.menu-links__icon-arrow-down.ml19px(
@@ -15,7 +15,7 @@
             nuxt-link.tooltip-link(to="/lk") себя в профиле
 
         .filter__options-wrapper
-          .filter__options-item.df.aic.pl10px.cp(
+          .filter__options-item.filter__options-item-gender.df.aic.pl10px.cp(
             v-for="genderObj,idx in genderOptions" :key="idx" @click.stop="toggleGender(genderObj)"
             :class="{ 'filter__options-item_active': genderObj.name === currentGender?.name, mt12px: idx === 0, mt3px: idx !== 0 }"
           )
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import IconArrowDownGreyMedium from "@/components/ui/icons/arrows/IconArrowDownGreyMedium.vue";
 import DropDown from "@/components/ui/blocks/DropDown.vue";
 import IconTooltip from "@/components/ui/icons/IconTooltip.vue";
@@ -47,22 +47,26 @@ export default {
     isShowGenderList: false
   }),
   watch: {
-    currentGender (nV) {
+    async currentGender (nV) {
       if (nV) {
         this.setFilterParam()
         this.setFindParam()
         this.setUrlParam()
+        await this.FETCH_SELECTS()
       } else {
         this.unsetFilterParam()
         this.unsetFindParam()
         this.unsetUrlParam()
+        this.SET_SELECTS(null)
       }
-      this.$emit('change-gender', nV)
+      this.TOGGLE_DISABLED(!!nV)
     }
   },
   methods: {
-    ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'UNSET_FILTER_PARAM', 'SET_FIND_PARAM', 'UNSET_FIND_PARAM' ]),
+    ...mapActions('selects', [ 'FETCH_SELECTS' ]),
+    ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'UNSET_FILTER_PARAM', 'SET_FIND_PARAM', 'UNSET_FIND_PARAM', 'TOGGLE_DISABLED' ]),
     ...mapMutations('catalog', [ 'SET_URL_PARAM', 'UNSET_URL_PARAM' ]),
+    ...mapMutations('selects', [ 'SET_SELECTS' ]),
     setFilterParam () {
       this.SET_FILTER_PARAM({
         param: 'gender',
@@ -78,7 +82,7 @@ export default {
       this.UNSET_FILTER_PARAM({ param: 'gender' })
     },
     setFindParam () {
-      this.SET_FIND_PARAM({
+      if (this.currentGender?.param.age) this.SET_FIND_PARAM({
         param: 'age',
         value: this.currentGender?.param.age || null
       })
@@ -108,11 +112,11 @@ export default {
         }
       })
     },
-    toggleGender(genderObj) {
+    toggleGender (genderObj) {
       this.currentGender === genderObj
         ? this.currentGender = null
         : this.currentGender = genderObj
-      this.isShowGenderList = false
+      if (this.currentGender) this.isShowGenderList = false
     }
   },
   created () {
@@ -176,7 +180,6 @@ export default {
       }
 
       .filter__options-item {
-        width: 166px;
         height: 32px;
         font-family: 'Inter', serif;
         font-style: normal;
@@ -189,6 +192,10 @@ export default {
         .gender__name_active {
           color: #2D78EA;
         }
+      }
+
+      .filter__options-item-gender {
+        width: 166px;
       }
 
       .filter__options-item:hover {
@@ -211,7 +218,7 @@ export default {
     }
   }
 
-  .filter__item:hover svg .icon-arrow-down-grey-medium {
+  .filter__item_hover:hover svg .icon-arrow-down-grey-medium {
     fill: #303030 !important;
   }
 
@@ -229,16 +236,6 @@ export default {
     width: 84px;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-  }
-
-  .ml19px {
-    margin-left: 19px;
-  }
-  .pl10px {
-    padding-left: 10px;
-  }
-  .ml6px {
-    margin-left: 6px;
   }
 
 </style>

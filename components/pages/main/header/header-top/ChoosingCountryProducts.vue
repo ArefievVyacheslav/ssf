@@ -4,7 +4,7 @@
       component(:is="getIconLanguage(currentLanguage)")
       .language.ml6px.hover-text-dark(:class="{ 'text-dark': isShowDropdown }") {{ currentLanguage.reduction }}
 
-    .pos-abs.t25(v-if="isShowDropdown")
+    .pos-abs.t25px(v-if="isShowDropdown")
       DropDown(@close="isShowDropdown = false" :styles="{ padding: '8px 12px 12px 12px', display: 'inline-block' }")
         .df.aic
           span.language-header.toe.wsn.oh Выбор страны
@@ -88,7 +88,7 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '9country',
+        param: '0country',
         value: this.currentLanguage.reduction === 'ru' ? '' : this.currentLanguage.reduction
       })
     },
@@ -165,66 +165,6 @@ export default {
   .language-item:hover {
     background: #F6F7F9;
     border-radius: 6px;
-  }
-
-  .pos-rel {
-    position: relative;
-  }
-
-  .pos-abs {
-    position: absolute;
-  }
-
-  .t25 {
-    top: 25px;
-  }
-
-  .aic {
-    align-items: center;
-  }
-
-  .mt12px {
-    margin-top: 12px;
-  }
-
-  .mt3px {
-    margin-top: 3px;
-  }
-
-  .mt-2px {
-    margin-top: -2px;
-  }
-
-  .mb12px {
-    margin-bottom: 12px;
-  }
-
-  .ml-auto {
-    margin-left: auto;
-  }
-
-  .ml6px {
-    margin-left: 6px;
-  }
-
-  .ml8px {
-    margin-left: 8px;
-  }
-
-  .pt2px {
-    padding-top: 2px;
-  }
-
-  .toe {
-    text-overflow: ellipsis;
-  }
-
-  .wsn {
-    white-space: nowrap;
-  }
-
-  .oh {
-    overflow: hidden;
   }
 
 </style>

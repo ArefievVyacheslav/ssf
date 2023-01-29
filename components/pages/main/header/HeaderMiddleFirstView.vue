@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   name: "HeaderMiddleFirstView",
@@ -27,13 +27,15 @@ export default {
     currentCategory: null
   }),
   watch: {
-    currentCategory (nV) {
+    async currentCategory (nV) {
       this.SET_COLLECTION(this.categories[this.currentCategory])
       this.SET_FILTER_PARAM({ param: 'category', value: nV })
       this.SET_URL_PARAM({ param: '1category', value: this.categories[this.currentCategory] })
+      await this.FETCH_SELECTS()
     }
   },
   methods: {
+    ...mapActions('selects', [ 'FETCH_SELECTS' ]),
     ...mapMutations('filters', ['SET_COLLECTION', 'SET_FILTER_PARAM']),
     ...mapMutations('catalog', ['SET_URL_PARAM']),
     getCategory () {
@@ -116,23 +118,16 @@ export default {
       }
     }
   }
-  .fdc {
-    flex-direction: column;
+
+  ::-webkit-scrollbar {
+    width: 6px;               /* ширина scrollbar */
   }
-  .jcc {
-    justify-content: center;
+  ::-webkit-scrollbar-track {
+    background: transparent;        /* цвет дорожки */
   }
-  .m0auto {
-    margin: 0 auto;
-  }
-  .m0 {
-    margin: 0;
-  }
-  .p0 {
-    padding: 0;
-  }
-  .mt25px {
-    margin-top: 25px;
+  ::-webkit-scrollbar-thumb {
+    background-color: #F0F0F0;    /* цвет плашки */
+    border-radius: 30px;       /* закругления плашки */
   }
 
 </style>

@@ -6,7 +6,7 @@
         MenuLinksCategoryChoice(v-if="isShowCategoryChoice")
       .df.pos-rel
         input.menu-search.mr25px(placeholder="Поиск")
-        IconSearchMenuLinks.pos-abs.t6px.l8px
+        IconSearchMenuLinks.pos-abs.t7px.l9px
         component(v-for="componentName in iconsComponents" :key="componentName" :is="componentName").hover-icon-menu-links.cp
         .dreambox-counter.pos-abs.df.jcc.aic(v-if="true") 47
 
@@ -46,37 +46,17 @@ export default {
       line-height: 29px;
       color: #212121;
     }
-    .menu-search {
-      width: 240px;
-      padding: 10px 12px 10px 38px;
-      background: #FFFFFF;
-      border: none;
-      border-radius: 50px;
-      font-family: 'Inter', serif;
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 17px;
-      letter-spacing: 0.02em;
-      color: #303030;
-      outline: none;
-    }
-    .menu-search:hover {
-      outline: 1px solid #DADEE7;
-    }
-    .menu-search:focus {
-      outline: 1px solid #2D78EA;
-    }
+
     .hover-icon-menu-links:hover {
       background: #DDE1E9;
       border-radius: 10px;
     }
 
     .dreambox-counter {
-      width: 23px;
-      height: 16px;
-      top: 18px;
-      left: 362px;
+      width: 21px;
+      height: 14px;
+      top: 19px;
+      left: 368px;
       background: #2D78EA;
       border: 1px solid #EAECF1;
       border-radius: 100px;
@@ -89,26 +69,30 @@ export default {
     }
   }
 
-  .t38px {
-    top: 38px;
+  .menu-search {
+    width: 240px;
+    padding: 9px 12px 10px 38px;
+    background: #FFFFFF;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Inter', serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.02em;
+    color: #303030;
+    outline: none;
   }
-  .t6px {
-    top: 6px;
+  .menu-search:hover {
+    outline: 1px solid #DADEE7;
   }
-  .l8px {
-    left: 8px;
+  .menu-search:focus {
+    outline: 1px solid #2D78EA;
   }
-  .l0px {
-    left: 0;
-  }
-  .mr25px {
-    margin-right: 25px;
-  }
-  .ml32px {
-    margin-left: 32px;
-  }
-  .tdn {
-    text-decoration: none;
+  .menu-search_filter {
+    width: 100%;
+    background: #F6F7F9;
   }
 
 </style>

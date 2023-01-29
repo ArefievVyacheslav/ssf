@@ -21,7 +21,8 @@ export const mutations = {
 export const getters = {
   GET_URL: state => {
     return Object.keys(state.urlObj).sort().reduce((acc, param) => {
-      return acc += state.urlObj[ param ] + '/'
-    }, '/katalog/').replaceAll('//', '')
+      if (state.urlObj[ param ]) acc += state.urlObj[ param ] + '/'
+      return acc
+    }, '/katalog/').replaceAll('//', '/')
   }
 }

@@ -1,7 +1,7 @@
 <template lang="pug">
   .menu-links__category-choice.ml32px.cp.pos-rel(@click="isShowCategoryList = !isShowCategoryList")
     | {{ currentCategory }}
-    IconArrowDownGreyMedium.menu-links__icon-arrow-down.pos-abs(
+    IconArrowDownGreyMedium.menu-links__icon-arrow-down.pos-abs.mt2px(
       :active="isShowCategoryList" :class="{ 'menu-links__icon-arrow-down-active': isShowCategoryList }"
     )
     .pos-abs.t38px.l0px(v-if="isShowCategoryList" @click.stop)
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import IconArrowDownGreyMedium from "@/components/ui/icons/arrows/IconArrowDownGreyMedium.vue";
 import DropDown from "@/components/ui/blocks/DropDown.vue";
 import IconCheckMarkBlue from "@/components/ui/icons/IconCheckMarkBlue.vue";
@@ -35,13 +35,15 @@ export default {
     isShowCategoryList: false
   }),
   watch: {
-    currentCategory (nV) {
+    async currentCategory (nV) {
       this.SET_COLLECTION(this.categories[this.currentCategory])
       this.SET_FILTER_PARAM({ param: 'category', value: nV })
       this.SET_URL_PARAM({ param: '1category', value: this.categories[this.currentCategory] })
+      await this.FETCH_SELECTS()
     }
   },
   methods: {
+    ...mapActions('selects', [ 'FETCH_SELECTS' ]),
     ...mapMutations('filters', ['SET_COLLECTION', 'SET_FILTER_PARAM']),
     ...mapMutations('catalog', ['SET_URL_PARAM']),
     getCategory () {
@@ -62,8 +64,8 @@ export default {
 <style lang="scss">
   .menu-links__category-choice {
     width: 134px;
-    padding-top: 9px;
-    padding-left: 12px;
+    padding-top: 11px;
+    padding-left: 13px;
     padding-bottom: 10px;
     background: #FFFFFF;
     border-radius: 6px;
