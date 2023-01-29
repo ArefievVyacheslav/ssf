@@ -1,4 +1,3 @@
-// export default function({ isServer, store }) {
 export default function({ store }) {
     if (!process.server) {
       store.commit('statistic/SET_NUMBER_VIEWS')

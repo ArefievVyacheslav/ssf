@@ -1,0 +1,24 @@
+.cp {
+  cursor: pointer;
+}
+.cnd {
+  cursor: no-drop;
+}
+.text-dark {
+  color: #303030 !important;
+}
+.hover-text-dark:hover {
+  color: #303030 !important;
+}
+.hover-text-dark:hover + svg .icon-arrow-down-grey-mini {
+  fill: #303030 !important;
+}
+.toe {
+  text-overflow: ellipsis;
+}
+.wsn {
+  white-space: nowrap;
+}
+.tdn {
+  text-decoration: none;
+}

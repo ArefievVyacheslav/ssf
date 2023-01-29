@@ -1,7 +1,7 @@
 <template lang="pug">
-  .filter__wrapper.m0auto
+  .filter__wrapper.m0auto.pb20px(:class="{ pt30px: $store.state.statistic.isFirstView || $route.path === '/' }")
     .container.df.jcc
-      GenderFilter(@change-gender="setDisabled")
+      GenderFilter
       SubcategoryFilter(:disabled="isDisabled")
 
 </template>
@@ -13,10 +13,9 @@ import SubcategoryFilter from "@/components/pages/main/header/header-filters/Sub
 export default {
   name: "HeaderFilters",
   components: { SubcategoryFilter, GenderFilter },
-  data: () => ({ isDisabled: true }),
-  methods: {
-    setDisabled (genderObj) {
-      this.isDisabled = !genderObj
+  computed: {
+    isDisabled () {
+      return this.$store.state.filters.isDisabled
     }
   }
 };
@@ -24,8 +23,6 @@ export default {
 
 <style lang="scss">
   .filter__wrapper {
-    padding-top: 30px;
-    padding-bottom: 20px;
     background: #EAECF1;
   }
 

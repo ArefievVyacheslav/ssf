@@ -21,5 +21,6 @@ module.exports = {
     'vue/require-prop-types': 'off',
     'array-callback-return': 'off',
     'no-return-assign': 'off',
+    'dot-notation': 'off',
   },
 }
