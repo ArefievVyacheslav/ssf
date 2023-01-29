@@ -40,6 +40,8 @@
                   :class="{ 'gender__name_active': currentSubcategoryArrNameRus.includes(subcatObj.subcategory) }"
                 ) {{ subcatObj.subcategory }}
 
+          .dropdown-choice-count.mt12px.mb10px(v-if="isActiveFilter") Чтобы увидеть другие категории нажмите «Сбросить»
+
         .filter__options-wrapper(v-else)
           .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.pl10px.cp(
             v-for="subcatObj in subcategoryOptionsSearch" :key="subcatObj.subcategory" @click.stop="toggleSubcategory(subcatObj)"
@@ -56,7 +58,7 @@
 
         .df.g10
           button.filter__dropdown-btn.filter__dropdown-btn-disagree.df.jcc.aic.mt12px.cp(
-            v-if="currentSubcategoryArr.length" @click.stop="currentSubcategoryArr = []"
+            v-if="currentSubcategoryArr.length" @click.stop="currentSubcategoryArr = []; resetFilter()"
           ) Сбросить
           button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="isShowSubcategoryList = false; FETCH_SELECTS()") Готово
 
@@ -100,7 +102,14 @@ export default {
       return this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory)
     },
     currentSubcategoryArrNameEn () {
-      return this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory_t.toLowerCase())
+      return this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj?.subcategory_t.toLowerCase())
+    },
+    isActiveFilter () {
+      return this.$store.state.selects.selects?.subcat
+        ? (this.currentSubcategoryArr.length === this.$store.state.selects.selects.subcat.length)
+          && this.currentSubcategoryArr.map(subcatObj => subcatObj.subcategory)
+            .every(el => this.$store.state.selects.selects.subcat.map(subcatObj => subcatObj.subcategory).includes(el))
+        : false
     }
   },
   watch: {
@@ -119,6 +128,17 @@ export default {
       handler (nV) {
         if (nV) this.getSubcategory()
       }
+    },
+    '$store.state.filters.collection': {
+      handler () {
+        this.currentSubcategoryArr = []
+      }
+    },
+    '$store.state.filters.filterObj': {
+      handler () {
+        this.currentSubcategoryArr = []
+      },
+      deep: true
     }
   },
   methods: {
@@ -156,19 +176,26 @@ export default {
     unsetUrlParam () {
       this.UNSET_URL_PARAM({ param: '3subcategory' })
     },
+    resetFilter () {
+      this.unsetFilterParam()
+      this.unsetFindParam()
+      this.unsetUrlParam()
+      this.FETCH_SELECTS()
+    },
     getSubcategory () {
       const subcatArr = []
       this.$store.state.selects.selects.subcat.forEach(subcatObj => {
-        if (this.$route.path.includes(subcatObj.subcategory_t.toLowerCase())) {
+        if (this.$route.path.includes(subcatObj?.subcategory_t.toLowerCase())) {
           subcatArr.push(subcatObj)
         }
       })
+      if (!subcatArr.length) subcatArr.push(...this.currentSubcategoryArr)
+      else this.currentSubcategoryArr = subcatArr
       this.SET_FILTER_PARAM({ param: 'subcategory', value: subcatArr })
-      this.currentSubcategoryArr = subcatArr
     },
     toggleSubcategory (subcatObj) {
-      this.currentSubcategoryArr.includes(subcatObj)
-        ? this.currentSubcategoryArr.splice(this.currentSubcategoryArr.indexOf(subcatObj), 1)
+      this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory).includes(subcatObj.subcategory)
+        ? this.currentSubcategoryArr.splice(this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory).indexOf(subcatObj.subcategory), 1)
         : this.currentSubcategoryArr.push(subcatObj)
     }
   }

@@ -18,7 +18,12 @@ export const mutations = {
   // UNSET_MY_FILTER_PARAM: (state, paramObj) => delete state.myFilterObj[paramObj.param],
   SET_FIND_PARAM: (state, paramObj) => state.findObj[paramObj.param] = paramObj.value,
   UNSET_FIND_PARAM: (state, paramObj) => delete state.findObj[paramObj.param],
-  TOGGLE_DISABLED: (state, condition) =>  state.isDisabled = !condition
+  TOGGLE_DISABLED: (state, condition) =>  state.isDisabled = !condition,
+  RESET_FILTERS: state => {
+    [ state.filterObj, state.findObj ].forEach(filterState => Object.keys(filterState).forEach(key => {
+      if (key !== 'category' && key !== 'country' && key !== 'delivery' && key !== 'gender' && key !== 'age') delete filterState[ key ]
+    }))
+  }
 }
 
 export const getters = {

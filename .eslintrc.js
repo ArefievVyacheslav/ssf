@@ -19,6 +19,7 @@ module.exports = {
     'vue/valid-template-root': 'off',
     'vue/order-in-components': 'off',
     'vue/require-prop-types': 'off',
+    'no-unused-expressions': 'off',
     'array-callback-return': 'off',
     'no-return-assign': 'off',
     'dot-notation': 'off',

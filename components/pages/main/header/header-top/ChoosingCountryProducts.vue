@@ -66,12 +66,13 @@ export default {
         this.setFilterParam()
         this.setFindParam()
         this.setUrlParam()
+        this.RESET_FILTERS()
       },
       deep: true
     }
   },
   methods: {
-    ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'SET_FIND_PARAM' ]),
+    ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'SET_FIND_PARAM', 'RESET_FILTERS' ]),
     ...mapMutations('catalog', [ 'SET_URL_PARAM' ]),
     getIconLanguage: langObj => `Icon${langObj.reduction.charAt(0).toUpperCase() + langObj.reduction.slice(1)}Country`,
     setFilterParam () {

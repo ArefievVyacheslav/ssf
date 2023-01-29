@@ -3,16 +3,18 @@
     .container.df.jcc
       GenderFilter
       SubcategoryFilter(:disabled="isDisabled")
+      BrandFilter(:disabled="isDisabled")
 
 </template>
 
 <script>
 import GenderFilter from "@/components/pages/main/header/header-filters/GenderFilter.vue";
 import SubcategoryFilter from "@/components/pages/main/header/header-filters/SubcategoryFilter.vue";
+import BrandFilter from "@/components/pages/main/header/header-filters/BrandFilter.vue";
 
 export default {
   name: "HeaderFilters",
-  components: { SubcategoryFilter, GenderFilter },
+  components: { BrandFilter, SubcategoryFilter, GenderFilter },
   computed: {
     isDisabled () {
       return this.$store.state.filters.isDisabled
