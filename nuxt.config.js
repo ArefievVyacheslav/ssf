@@ -61,11 +61,8 @@ export default {
     },
     timeout: 5000
   },
-  // axios: {
-  //   baseURL: 'http://localhost:3004',
-  // },
   axios: {
-    baseURL: 'http://api.sales-search.store/',
+    baseURL: isDev ? 'http://localhost:3004' : 'http://api.sales-search.store/',
   },
   build: {
     optimizeCss: false,
