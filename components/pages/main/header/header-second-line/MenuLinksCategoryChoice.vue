@@ -39,13 +39,14 @@ export default {
       this.SET_COLLECTION(this.categories[this.currentCategory])
       this.SET_FILTER_PARAM({ param: 'category', value: nV })
       this.SET_URL_PARAM({ param: '1category', value: this.categories[this.currentCategory] })
+      this.RESET_FILTERS()
       await this.FETCH_SELECTS()
     }
   },
   methods: {
     ...mapActions('selects', [ 'FETCH_SELECTS' ]),
-    ...mapMutations('filters', ['SET_COLLECTION', 'SET_FILTER_PARAM']),
-    ...mapMutations('catalog', ['SET_URL_PARAM']),
+    ...mapMutations('filters', [ 'SET_COLLECTION', 'SET_FILTER_PARAM', 'RESET_FILTERS' ]),
+    ...mapMutations('catalog', [ 'SET_URL_PARAM' ]),
     getCategory () {
       const cats = this.categories
       Object.keys(cats).forEach(catKey => {
