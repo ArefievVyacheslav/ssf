@@ -4,7 +4,7 @@ export const state = () => ({
 
 export const actions = {
   async FETCH_SELECTS ({ rootGetters, commit }) {
-    const { data } = await this.$axios.post('http://localhost:3004/selects', rootGetters["filters/GET_TOTAL_FILTERS"])
+    const { data } = await this.$axios.post('/selects', rootGetters["filters/GET_TOTAL_FILTERS"])
     commit('SET_SELECTS', data)
   }
 }
