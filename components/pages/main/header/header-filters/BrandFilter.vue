@@ -36,7 +36,7 @@
 
           .dropdown-choice-count.mt12px.mb10px(v-if="isActiveFilter") Чтобы увидеть другие бренды нажмите «Сбросить»
 
-        .filter__options-wrapper(v-else :class="{ mt37px: query && !brandOptionsSearch.length }")
+        .filter__options-wrapper(v-else :class="{ mt37px: query }")
           .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.pl10px.cp(
             v-for="brandStr in brandOptionsSearch" :key="brandStr" @click.stop="toggleSubcategory(brandStr)"
             :class="{ 'filter__options-item_active': currentBrandArr.includes(brandStr) }"
@@ -240,7 +240,7 @@ export default {
 
   .modal-brand-search {
     margin-top: 30px;
-    width: 100%;
+    width: 100% !important;
     max-width: 331px !important;
     padding: 14px !important;
     border-radius: 10px !important;
