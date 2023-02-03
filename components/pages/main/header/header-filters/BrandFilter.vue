@@ -51,7 +51,7 @@
 
         .df.g10
           button.filter__dropdown-btn.filter__dropdown-btn-disagree.df.jcc.aic.mt12px.cp(
-            v-if="currentBrandArr.length" @click.stop="currentBrandArr = []"
+            v-if="currentBrandArr.length" @click.stop="currentBrandArr = []; resetFilter()"
           ) Сбросить
           button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="isShowBrandList = false; FETCH_SELECTS()") Готово
 
