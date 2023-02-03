@@ -14,7 +14,7 @@
             | Чтобы не выбирать одни и те же <br> данные каждый раз, вы можете <br> настроить их у &nbsp
             nuxt-link.tooltip-link(to="/lk") себя в профиле
 
-        .filter__options-wrapper
+        .filter__options-wrapper.filter__options-wrapper_gender
           .filter__options-item.filter__options-item-gender.df.aic.pl10px.cp(
             v-for="genderObj,idx in genderOptions" :key="idx" @click.stop="toggleGender(genderObj)"
             :class="{ 'filter__options-item_active': genderObj.name === currentGender?.name, mt12px: idx === 0, mt3px: idx !== 0 }"
@@ -44,7 +44,8 @@ export default {
       // { name: 'Детский', url: 'detyam', param: { age: 'Детский' } }
     ],
     currentGender: null,
-    isShowGenderList: false
+    isShowGenderList: false,
+    init: false
   }),
   watch: {
     async currentGender (nV) {
@@ -52,7 +53,7 @@ export default {
         this.setFilterParam()
         this.setFindParam()
         this.setUrlParam()
-        await this.FETCH_SELECTS()
+        if (this.init) await this.FETCH_SELECTS()
       } else {
         this.unsetFilterParam()
         this.unsetFindParam()
@@ -124,6 +125,9 @@ export default {
     this.setFilterParam()
     this.setFindParam()
     this.setUrlParam()
+  },
+  mounted () {
+    setTimeout(() => this.init = true, 1000)
   }
 };
 </script>
@@ -177,6 +181,10 @@ export default {
         letter-spacing: 0.02em;
         text-transform: uppercase;
         color: #B3B3B3;
+      }
+
+      .filter__options-wrapper_gender {
+        height: auto;
       }
 
       .filter__options-item {

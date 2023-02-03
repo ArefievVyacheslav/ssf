@@ -26,19 +26,14 @@
         .dropdown-choice-count.mt12px.mb10px(v-else) Выбрано: {{ currentSubcategoryArr.length }}
 
         .filter__options-wrapper(v-if="!query")
-          .filter__letter.mb12px(v-for="subcatKey,idx in Object.keys(subcategoryOptions)" :key="subcatKey") {{ subcatKey }}
+          .filter__letter.mb12px(v-for="letterKey,idx in Object.keys(subcategoryOptions)" :key="letterKey") {{ letterKey }}
             .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.cp(
-              v-for="subcatObj,idx in subcategoryOptions[ subcatKey ]" :key="idx" @click.stop="toggleSubcategory(subcatObj)"
+              v-for="subcatObj,idx in subcategoryOptions[ letterKey ]" :key="idx" @click.stop="toggleSubcategory(subcatObj)"
               :class="{ 'filter__options-item_active': currentSubcategoryArrNameRus.includes(subcatObj.subcategory) }"
             )
               .df.aic
-                Checkbox(
-                  :is-checked="currentSubcategoryArrNameRus.includes(subcatObj.subcategory)"
-                  styles="top: 3px; left: 3px;"
-                )
-                span.gender__name.ml8px(
-                  :class="{ 'gender__name_active': currentSubcategoryArrNameRus.includes(subcatObj.subcategory) }"
-                ) {{ subcatObj.subcategory }}
+                Checkbox(:is-checked="currentSubcategoryArrNameRus.includes(subcatObj.subcategory)" styles="top: 3px; left: 3px;")
+                span.gender__name.ml8px(:class="{ 'gender__name_active': currentSubcategoryArrNameRus.includes(subcatObj.subcategory) }") {{ subcatObj.subcategory }}
 
           .dropdown-choice-count.mt12px.mb10px(v-if="isActiveFilter") Чтобы увидеть другие категории нажмите «Сбросить»
 
@@ -48,13 +43,8 @@
             :class="{ 'filter__options-item_active': currentSubcategoryArrNameRus.includes(subcatObj.subcategory) }"
           )
             .df.aic
-              Checkbox(
-                :is-checked="currentSubcategoryArrNameRus.includes(subcatObj.subcategory)"
-                styles="top: 3px; left: 3px;"
-              )
-              span.gender__name.ml8px(
-                :class="{ 'gender__name_active': currentSubcategoryArrNameRus.includes(subcatObj.subcategory) }"
-              ) {{ subcatObj.subcategory }}
+              Checkbox(:is-checked="currentSubcategoryArrNameRus.includes(subcatObj.subcategory)" styles="top: 3px; left: 3px;")
+              span.gender__name.ml8px(:class="{ 'gender__name_active': currentSubcategoryArrNameRus.includes(subcatObj.subcategory) }") {{ subcatObj.subcategory }}
 
         .df.g10
           button.filter__dropdown-btn.filter__dropdown-btn-disagree.df.jcc.aic.mt12px.cp(
@@ -81,7 +71,8 @@ export default {
     query: '',
     currentSubcategoryArr: [],
     isShowSubcategoryList: false,
-    isDisabled: true
+    isDisabled: true,
+    init: false
   }),
   computed: {
     subcategoryOptions () {
@@ -124,19 +115,14 @@ export default {
         this.unsetUrlParam()
       }
     },
-    '$store.state.selects.selects.subcat': {
-      handler (nV) {
-        if (nV) this.getSubcategory()
-      }
-    },
     '$store.state.filters.collection': {
       handler () {
-        this.currentSubcategoryArr = []
+        if (this.init) this.currentSubcategoryArr = []
       }
     },
     '$store.state.filters.filterObj': {
       handler () {
-        this.currentSubcategoryArr = []
+        if (this.init) this.currentSubcategoryArr = []
       },
       deep: true
     }
@@ -177,6 +163,7 @@ export default {
       this.UNSET_URL_PARAM({ param: '3subcategory' })
     },
     resetFilter () {
+      this.query = ''
       this.unsetFilterParam()
       this.unsetFindParam()
       this.unsetUrlParam()
@@ -198,6 +185,12 @@ export default {
         ? this.currentSubcategoryArr.splice(this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory).indexOf(subcatObj.subcategory), 1)
         : this.currentSubcategoryArr.push(subcatObj)
     }
+  },
+  created () {
+    this.getSubcategory()
+  },
+  mounted () {
+    setTimeout(() => this.init = true, 1000)
   }
 };
 </script>
@@ -219,57 +212,57 @@ export default {
 
   .filter__item_subcategory {
     width: 129px;
+  }
 
-    .filter__options-wrapper {
-      height: 267px;
-      overflow-x: auto;
+  .filter__options-wrapper {
+    height: 267px;
+    overflow-x: auto;
+  }
+
+  .filter__letter {
+    font-family: 'Inter', serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.02em;
+    color: #B3B3B3;
+
+    .filter__options-item-subcategory {
+      width: 235px;
+      padding-left: 12px;
     }
+  }
 
-    .filter__letter {
-      font-family: 'Inter', serif;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 17px;
-      letter-spacing: 0.02em;
-      color: #B3B3B3;
+  .filter__dropdown-allow {
+    padding: 12px 24px;
+    background: #2D78EA;
+    border-radius: 10px;
+  }
 
-      .filter__options-item-subcategory {
-        width: 235px;
-        padding-left: 12px;
-      }
-    }
+  .filter__dropdown-btn {
+    border-radius: 10px;
+    font-family: 'Inter', serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    letter-spacing: 0.02em;
+    border: none;
+  }
 
-    .filter__dropdown-allow {
-      padding: 12px 24px;
-      background: #2D78EA;
-      border-radius: 10px;
-    }
+  .filter__dropdown-btn-agree {
+    width: 100%;
+    padding: 12px 0;
+    color: #FFFFFF;
+    background: #2D78EA;
+  }
 
-    .filter__dropdown-btn {
-      border-radius: 10px;
-      font-family: 'Inter', serif;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      line-height: 17px;
-      letter-spacing: 0.02em;
-      border: none;
-    }
-
-    .filter__dropdown-btn-agree {
-      width: 100%;
-      padding: 12px 0;
-      color: #FFFFFF;
-      background: #2D78EA;
-    }
-
-    .filter__dropdown-btn-disagree {
-      width: 100%;
-      padding: 12px 0;
-      color: #616161;
-      background: #F6F7F9;
-    }
+  .filter__dropdown-btn-disagree {
+    width: 100%;
+    padding: 12px 0;
+    color: #616161;
+    background: #F6F7F9;
   }
 
 </style>

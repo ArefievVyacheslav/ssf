@@ -23,6 +23,6 @@ export const getters = {
     return Object.keys(state.urlObj).sort().reduce((acc, param) => {
       if (state.urlObj[ param ]) acc += state.urlObj[ param ] + '/'
       return acc
-    }, '/katalog/').replaceAll('//', '/')
+    }, '/catalog/').replaceAll('//', '/')
   }
 }

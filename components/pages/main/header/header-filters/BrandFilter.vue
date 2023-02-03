@@ -3,7 +3,7 @@
     @click="isShowBrandList = !isShowBrandList" :class="{ 'filter__item_hover': !disabled, 'cnd': disabled }"
   )
     h3.filter__name.filter__name_gender(:class="{ disabled }") Бренд
-    //.number-selected-options.ml6px(v-if="currentBrandArr.length") {{ currentBrandArr.length }}
+    .number-selected-options.ml6px(v-if="currentBrandArr.length") {{ currentBrandArr.length }}
     IconArrowDownGreyMedium.menu-links__icon-arrow-down.ml19px(
       :disabled="disabled" :class="{ 'menu-links__icon-arrow-down-active': isShowBrandList && !disabled }"
     )
@@ -22,173 +22,229 @@
           div(v-if="query" @click="query = ''")
             IconCloseSearch.pos-abs.t7px.r8px
 
-        .dropdown-choice-count.mt12px.mb10px(v-if="query && !subcategoryOptionsSearch.length") Ничего не найдено
-        .dropdown-choice-count.mt12px.mb10px(v-else) Выбрано: {{ currentBrandArr.length }}
-    //
-    //    .filter__options-wrapper(v-if="!query")
-    //      .filter__letter.mb12px(v-for="subcatKey,idx in Object.keys(subcategoryOptions)" :key="subcatKey") {{ subcatKey }}
-    //        .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.cp(
-    //          v-for="subcatObj,idx in subcategoryOptions[ subcatKey ]" :key="idx" @click.stop="toggleSubcategory(subcatObj)"
-    //          :class="{ 'filter__options-item_active': currentBrandArrNameRus.includes(subcatObj.subcategory) }"
-    //        )
-    //          .df.aic
-    //            Checkbox(
-    //              :is-checked="currentBrandArrNameRus.includes(subcatObj.subcategory)"
-    //              styles="top: 3px; left: 3px;"
-    //            )
-    //            span.gender__name.ml8px(
-    //              :class="{ 'gender__name_active': currentBrandArrNameRus.includes(subcatObj.subcategory) }"
-    //            ) {{ subcatObj.subcategory }}
-    //
-    //    .filter__options-wrapper(v-else)
-    //      .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.pl10px.cp(
-    //        v-for="subcatObj in subcategoryOptionsSearch" :key="subcatObj.subcategory" @click.stop="toggleSubcategory(subcatObj)"
-    //        :class="{ 'filter__options-item_active': currentBrandArrNameRus.includes(subcatObj.subcategory) }"
-    //      )
-    //        .df.aic
-    //          Checkbox(
-    //            :is-checked="currentBrandArrNameRus.includes(subcatObj.subcategory)"
-    //            styles="top: 3px; left: 3px;"
-    //          )
-    //          span.gender__name.ml8px(
-    //            :class="{ 'gender__name_active': currentBrandArrNameRus.includes(subcatObj.subcategory) }"
-    //          ) {{ subcatObj.subcategory }}
-    //
-    //    .df.g10
-    //      button.filter__dropdown-btn.filter__dropdown-btn-disagree.df.jcc.aic.mt12px.cp(
-    //        v-if="currentBrandArr.length" @click.stop="currentBrandArr = []"
-    //      ) Сбросить
-    //      button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="isShowBrandList = false; FETCH_SELECTS()") Готово
+        .dropdown-choice-count.mt12px.mb10px(v-if="!query && brandOptionsSearch.length") Выбрано: {{ currentBrandArr.length }}
+
+        .filter__options-wrapper(v-if="!query")
+          .filter__letter.mb12px(v-for="letterKey,idx in Object.keys(brandOptions)" :key="letterKey") {{ letterKey }}
+            .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.cp(
+              v-for="brandStr,idx in brandOptions[ letterKey ]" :key="idx" @click.stop="toggleSubcategory(brandStr)"
+              :class="{ 'filter__options-item_active': currentBrandArr.includes(brandStr) }"
+            )
+              .df.aic
+                Checkbox(:is-checked="currentBrandArr.includes(brandStr)" styles="top: 3px; left: 3px;") {{ brandStr }}
+                span.gender__name.ml8px(:class="{ 'gender__name_active': currentBrandArr.includes(brandStr) }") {{ brandStr }}
+
+          .dropdown-choice-count.mt12px.mb10px(v-if="isActiveFilter") Чтобы увидеть другие бренды нажмите «Сбросить»
+
+        .filter__options-wrapper(v-else :class="{ mt37px: query && !brandOptionsSearch.length }")
+          .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.pl10px.cp(
+            v-for="brandStr in brandOptionsSearch" :key="brandStr" @click.stop="toggleSubcategory(brandStr)"
+            :class="{ 'filter__options-item_active': currentBrandArr.includes(brandStr) }"
+          )
+            .df.aic
+              Checkbox(:is-checked="currentBrandArr.includes(brandStr)" styles="top: 3px; left: 3px;")
+              span.gender__name.ml8px(:class="{ 'gender__name_active': currentBrandArr.includes(brandStr) }") {{ brandStr }}
+
+          .brand-offer.df.fdc.pt90px(v-if="query && !brandOptionsSearch.length")
+            .dropdown-choice-count.mt12px.mb10px.tac Ничего не найдено
+            .brand-offer-text.tac(@click.stop v-b-modal.add-brand-modal) Предложить добавить бренд
+
+        .df.g10
+          button.filter__dropdown-btn.filter__dropdown-btn-disagree.df.jcc.aic.mt12px.cp(
+            v-if="currentBrandArr.length" @click.stop="currentBrandArr = []"
+          ) Сбросить
+          button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="isShowBrandList = false; FETCH_SELECTS()") Готово
+
+    Modal(@modal-ok="addBrands" ident="add-brand-modal" title="Добавление бренда" okTitle="Предложить" cancelTitle="Отменить")
+      template(v-slot:modal-desc)
+        span.modal-desc Если вы не нашли бренд, который искали, то вы можете предложить добавить его.
+        input(v-model="userBrandsStr" placeholder="Названия брендов через ,").menu-search.modal-brand-search
 
 </template>
 
 <script>
-// import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import IconArrowDownGreyMedium from "@/components/ui/icons/arrows/IconArrowDownGreyMedium.vue";
 import DropDown from "@/components/ui/blocks/DropDown.vue";
 import IconTooltip from "@/components/ui/icons/IconTooltip.vue";
 import IconSearchMenuLinks from "@/components/ui/icons/menu-links/IconSearchMenuLinks.vue";
 import IconCloseSearch from "@/components/ui/icons/IconCloseSearch.vue";
+import Checkbox from "@/components/ui/blocks/Checkbox.vue";
+import Modal from "@/components/ui/Modal.vue";
 
 export default {
   name: "BrandFilter",
-  components: { IconCloseSearch, IconSearchMenuLinks, IconTooltip, DropDown, IconArrowDownGreyMedium },
+  components: { Modal, Checkbox, IconCloseSearch, IconSearchMenuLinks, IconTooltip, DropDown, IconArrowDownGreyMedium },
   props: [ 'disabled' ],
   data: () => ({
     query: '',
     currentBrandArr: [],
+    userBrandsStr: '',
     isShowBrandList: false,
-    isDisabled: true
+    isDisabled: true,
+    isDisabledAddFilter: false,
+    init: false
   }),
-  // computed: {
-  //   subcategoryOptions () {
-  //     const subcat = this.$store.state.selects.selects.subcat.concat()
-  //     const collator = new Intl.Collator('ru')
-  //     const subcatSort = subcat.sort((x, y) => collator.compare(x.subcategory, y.subcategory))
-  //     return subcatSort.reduce((acc, subcatObj) => {
-  //       const firstLetter = subcatObj.subcategory[ 0 ]
-  //       if (!acc[firstLetter]) acc[firstLetter] = [ subcatObj ]
-  //       else acc[firstLetter].push(subcatObj)
-  //       return acc
-  //     }, {})
-  //   },
-  //   subcategoryOptionsSearch () {
-  //     return this.$store.state.selects.selects.subcat.filter(subcatObj => subcatObj.subcategory.toLowerCase().includes(this.query.toLowerCase()))
-  //   },
-  //   currentBrandArrNameRus () {
-  //     return this.currentBrandArr.map(currentSubcatObj => currentSubcatObj.subcategory)
-  //   },
-  //   currentBrandArrNameEn () {
-  //     return this.currentBrandArr.map(currentSubcatObj => currentSubcatObj?.subcategory_t.toLowerCase())
-  //   }
-  // },
-  // watch: {
-  //   currentBrandArr (nV) {
-  //     if (nV.length) {
-  //       this.setFilterParam()
-  //       this.setFindParam()
-  //       this.setUrlParam()
-  //     } else {
-  //       this.unsetFilterParam()
-  //       this.unsetFindParam()
-  //       this.unsetUrlParam()
-  //     }
-  //   },
-  //   '$store.state.selects.selects.subcat': {
-  //     handler (nV) {
-  //       if (nV) this.getSubcategory()
-  //     }
-  //   },
-  //   '$store.state.filters.collection': {
-  //     handler () {
-  //       this.currentBrandArr = []
-  //     }
-  //   },
-  //   '$store.state.filters.filterObj': {
-  //     handler () {
-  //       this.currentBrandArr = []
-  //     },
-  //     deep: true
-  //   }
-  // },
-  // methods: {
-  //   ...mapActions('selects', [ 'FETCH_SELECTS' ]),
-  //   ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'UNSET_FILTER_PARAM', 'SET_FIND_PARAM', 'UNSET_FIND_PARAM' ]),
-  //   ...mapMutations('catalog', [ 'SET_URL_PARAM', 'UNSET_URL_PARAM' ]),
-  //   setFilterParam () {
-  //     this.SET_FILTER_PARAM({
-  //       param: 'subcategory',
-  //       value: this.currentBrandArr.length ? this.currentBrandArrNameRus : []
-  //     })
-  //   },
-  //   unsetFilterParam () {
-  //     this.UNSET_FILTER_PARAM({ param: 'subcategory' })
-  //   },
-  //   setFindParam () {
-  //     this.SET_FIND_PARAM({
-  //       param: 'subcategory',
-  //       value: { $in: this.currentBrandArrNameRus }
-  //     })
-  //   },
-  //   unsetFindParam () {
-  //     this.UNSET_FIND_PARAM({ param: 'subcategory' })
-  //   },
-  //   setUrlParam () {
-  //     this.SET_URL_PARAM({
-  //       param: '3subcategory',
-  //       value: this.currentBrandArrNameEn.reduce((acc, subcatT, idx) => {
-  //         if (idx !== this.currentBrandArrNameEn.length - 1) acc += subcatT + '--'
-  //         else acc += subcatT
-  //         return acc
-  //       }, '')
-  //     })
-  //   },
-  //   unsetUrlParam () {
-  //     this.UNSET_URL_PARAM({ param: '3subcategory' })
-  //   },
-  //   getSubcategory () {
-  //     const subcatArr = []
-  //     this.$store.state.selects.selects.subcat.forEach(subcatObj => {
-  //       if (this.$route.path.includes(subcatObj?.subcategory_t.toLowerCase())) {
-  //         subcatArr.push(subcatObj)
-  //       }
-  //     })
-  //     if (!subcatArr.length) subcatArr.push(...this.currentBrandArr)
-  //     else this.currentBrandArr = subcatArr
-  //     this.SET_FILTER_PARAM({ param: 'subcategory', value: subcatArr })
-  //   },
-  //   toggleSubcategory (subcatObj) {
-  //     this.currentBrandArr.includes(subcatObj)
-  //       ? this.currentBrandArr.splice(this.currentBrandArr.indexOf(subcatObj), 1)
-  //       : this.currentBrandArr.push(subcatObj)
-  //   }
-  // }
+  computed: {
+    brandOptions () {
+      const brand = this.$store.state.selects.selects.brand.concat()
+      const brandSort = brand.sort()
+      return brandSort.reduce((acc, brandStr) => {
+        const firstLetter = brandStr[ 0 ]
+        if (!acc[firstLetter]) acc[firstLetter] = [ brandStr ]
+        else acc[firstLetter].push(brandStr)
+        return acc
+      }, {})
+    },
+    brandOptionsSearch () {
+      return this.$store.state.selects.selects.brand.filter(brandStr => brandStr.toLowerCase().includes(this.query.toLowerCase()))
+    },
+    isActiveFilter () {
+      return this.$store.state.selects.selects?.brand
+        ? (this.currentBrandArr.length === this.$store.state.selects.selects.brand.length)
+        && this.currentBrandArr.every(el => this.$store.state.selects.selects.brand.includes(el))
+        : false
+    },
+    userBrandsArr () {
+      return this.userBrandsStr.split(',')
+        .map(brandStr => brandStr.replaceAll(' ', '').toLowerCase())
+        .filter(brandStr => brandStr)
+    }
+  },
+  watch: {
+    currentBrandArr (nV) {
+      if (nV.length) {
+        this.setFilterParam()
+        this.setFindParam()
+        this.setUrlParam()
+      } else {
+        this.unsetFilterParam()
+        this.unsetFindParam()
+        this.unsetUrlParam()
+      }
+    },
+    '$store.state.filters.collection': {
+      handler () {
+        if (this.init) this.currentBrandArr = []
+      }
+    },
+    '$store.state.filters.filterObj': {
+      handler () {
+        if (this.init) this.currentBrandArr = []
+      },
+      deep: true
+    }
+  },
+  methods: {
+    ...mapActions('selects', [ 'FETCH_SELECTS' ]),
+    ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'UNSET_FILTER_PARAM', 'SET_FIND_PARAM', 'UNSET_FIND_PARAM' ]),
+    ...mapMutations('catalog', [ 'SET_URL_PARAM', 'UNSET_URL_PARAM' ]),
+    setFilterParam () {
+      this.SET_FILTER_PARAM({
+        param: 'brand',
+        value: this.currentBrandArr.length ? this.currentBrandArr : []
+      })
+    },
+    unsetFilterParam () {
+      this.UNSET_FILTER_PARAM({ param: 'brand' })
+    },
+    setFindParam () {
+      this.SET_FIND_PARAM({
+        param: 'brand',
+        value: { $in: this.currentBrandArr }
+      })
+    },
+    unsetFindParam () {
+      this.UNSET_FIND_PARAM({ param: 'brand' })
+    },
+    setUrlParam () {
+      this.SET_URL_PARAM({
+        param: '4brand',
+        value: this.currentBrandArr.reduce((acc, brand, idx) => {
+          if (idx !== this.currentBrandArr.length - 1) acc += brand.toLowerCase().replaceAll(' ', '-') + '--'
+          else acc += brand.toLowerCase().replaceAll(' ', '-')
+          return acc
+        }, '')
+      })
+    },
+    unsetUrlParam () {
+      this.UNSET_URL_PARAM({ param: '4brand' })
+    },
+    resetFilter () {
+      this.query = ''
+      this.unsetFilterParam()
+      this.unsetFindParam()
+      this.unsetUrlParam()
+      this.FETCH_SELECTS()
+    },
+    getBrand () {
+      const brandArr = []
+      this.$store.state.selects.selects.brand.forEach(brandStr => {
+        if (this.$route.path.includes(brandStr.toLowerCase().replaceAll(' ', '-'))) {
+          brandArr.push(brandStr)
+        }
+      })
+      if (!brandArr.length) brandArr.push(...this.currentBrandArr)
+      else this.currentBrandArr = brandArr
+      this.SET_FILTER_PARAM({ param: 'brand', value: brandArr })
+    },
+    toggleSubcategory (brandStr) {
+      this.currentBrandArr.includes(brandStr)
+        ? this.currentBrandArr.splice(this.currentBrandArr.indexOf(brandStr), 1)
+        : this.currentBrandArr.push(brandStr)
+    },
+    async addBrands () {
+      if (this.isDisabledAddFilter) this.$bvToast.toast('Возможность добавить появится через минуту', {
+        title: 'BootstrapVue Toast',
+        variant: 'warning',
+        autoHideDelay: 5000
+      })
+      else if (this.userBrandsArr.length) {
+        try {
+          this.isDisabledAddFilter = true
+          const { data } = await this.$axios.put('service', { userBrands: this.userBrandsArr })
+          this.$bvToast.toast(data.msg, {
+            title: 'BootstrapVue Toast',
+            variant: data.type,
+            autoHideDelay: 5000
+          })
+          setTimeout(() => this.isDisabledAddFilter = false, 60 * 1000)
+        } catch (e) {}
+      }
+    }
+  },
+  created () {
+    this.getBrand()
+  },
+  mounted () {
+    setTimeout(() => this.init = true, 1000)
+  }
 };
 </script>
 
 <style lang="scss">
   .filter__item_brand {
     width: 99px;
+
+    .brand-offer-text {
+      font-family: 'Inter', serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      text-align: center;
+      letter-spacing: 0.02em;
+      color: #2D78EA;
+    }
+  }
+
+  .modal-brand-search {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 331px !important;
+    padding: 14px !important;
+    border-radius: 10px !important;
+    background: #F6F7F9 !important;
   }
 
 </style>
