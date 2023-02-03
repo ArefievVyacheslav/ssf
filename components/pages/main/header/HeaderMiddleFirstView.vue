@@ -24,7 +24,8 @@ export default {
       'Обувь': 'shoes',
       'Аксессуары': 'accessories'
     },
-    currentCategory: null
+    currentCategory: null,
+    init: false
   }),
   watch: {
     async currentCategory (nV) {
@@ -32,7 +33,7 @@ export default {
       this.SET_FILTER_PARAM({ param: 'category', value: nV })
       this.SET_URL_PARAM({ param: '1category', value: this.categories[this.currentCategory] })
       this.RESET_FILTERS()
-      await this.FETCH_SELECTS()
+      if (this.init) await this.FETCH_SELECTS()
     }
   },
   methods: {
@@ -50,6 +51,9 @@ export default {
   },
   created () {
     this.getCategory()
+  },
+  mounted () {
+    setTimeout(() => this.init = true, 1000)
   }
 };
 </script>

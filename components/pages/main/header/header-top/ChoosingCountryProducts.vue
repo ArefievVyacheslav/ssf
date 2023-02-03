@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapActions, mapMutations } from "vuex";
 import IconRuCountry from "@/components/ui/icons/country/IconRuCountry.vue";
 import IconKzCountry from "@/components/ui/icons/country/IconKzCountry.vue";
 import IconRbCountry from "@/components/ui/icons/country/IconRbCountry.vue";
@@ -57,21 +57,24 @@ export default {
         { country: 'Туркменистан', reduction: 'tm' }
       ],
       currentLanguage: { country: 'Россия', reduction: 'ru' },
-      isShowDropdown: false
+      isShowDropdown: false,
+      init: false
     }
   },
   watch: {
     currentLanguage: {
-      handler () {
+      async handler () {
         this.setFilterParam()
         this.setFindParam()
         this.setUrlParam()
         this.RESET_FILTERS()
+        if (this.init) await this.FETCH_SELECTS()
       },
       deep: true
     }
   },
   methods: {
+    ...mapActions('selects', [ 'FETCH_SELECTS' ]),
     ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'SET_FIND_PARAM', 'RESET_FILTERS' ]),
     ...mapMutations('catalog', [ 'SET_URL_PARAM' ]),
     getIconLanguage: langObj => `Icon${langObj.reduction.charAt(0).toUpperCase() + langObj.reduction.slice(1)}Country`,
@@ -107,6 +110,9 @@ export default {
     this.setFindParam()
     this.setUrlParam()
     this.getCountry()
+  },
+  mounted () {
+    setTimeout(() => this.init = true, 1000)
   }
 };
 </script>
