@@ -33,7 +33,7 @@ export const actions = {
         }
         if (path.includes('/show-')) {
           path.split('/').forEach(paramStr => {
-            if (paramStr.includes('show-')) filtersObj.pagination.page = +paramStr.replace('show-', '')
+            if (paramStr.includes('show-')) filtersObj.pagination.show = +paramStr.replace('show-', '')
           })
         }
         languages.forEach(lang => path.includes(lang) ? filtersObj.findObj.delivery = { $in: [ lang.replace('/', '') ] } : filtersObj.findObj.delivery = { $in: [ 'ru' ] })
@@ -57,6 +57,14 @@ export const actions = {
           }
         })
         if (brandArr.length) filtersObj.findObj.brand = { $in: brandArr }
+        // получаю размеры если есть
+        const sizesArr = []
+        data.size.forEach(sizeStr => {
+          if (path.includes('/' + sizeStr.toLowerCase()) || path.includes('-' + sizeStr.toLowerCase())) {
+            sizesArr.push(sizeStr)
+          }
+        })
+        if (sizesArr.length) filtersObj.findObj.sizes = { $in: sizesArr }
 
         // запрос на получение продуктов
         const products = await this.$axios.post('/products', filtersObj)
