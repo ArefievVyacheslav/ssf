@@ -5,6 +5,7 @@
       SubcategoryFilter(:disabled="isDisabled")
       BrandFilter(:disabled="isDisabled")
       SizeFilter(:disabled="isDisabled")
+      PriceFilter(:disabled="isDisabled")
 
 </template>
 
@@ -13,10 +14,11 @@ import GenderFilter from "@/components/pages/main/header/header-filters/GenderFi
 import SubcategoryFilter from "@/components/pages/main/header/header-filters/SubcategoryFilter.vue";
 import BrandFilter from "@/components/pages/main/header/header-filters/BrandFilter.vue";
 import SizeFilter from "@/components/pages/main/header/header-filters/SizeFilter.vue";
+import PriceFilter from "@/components/pages/main/header/header-filters/PriceFilter.vue";
 
 export default {
   name: "HeaderFilters",
-  components: { SizeFilter, BrandFilter, SubcategoryFilter, GenderFilter },
+  components: { PriceFilter, SizeFilter, BrandFilter, SubcategoryFilter, GenderFilter },
   computed: {
     isDisabled () {
       return this.$store.state.filters.isDisabled

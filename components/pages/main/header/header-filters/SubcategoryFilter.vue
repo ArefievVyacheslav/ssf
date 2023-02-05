@@ -35,7 +35,7 @@
                 Checkbox(:is-checked="currentSubcategoryArrNameRus.includes(subcatObj.subcategory)" styles="top: 3px; left: 3px;")
                 span.gender__name.ml8px(:class="{ 'gender__name_active': currentSubcategoryArrNameRus.includes(subcatObj.subcategory) }") {{ subcatObj.subcategory }}
 
-          .dropdown-choice-count.mt12px.mb10px(v-if="isActiveFilter") Чтобы увидеть другие категории нажмите «Сбросить»
+          .dropdown-choice-count.mt12px.mb10px(v-if="isActiveFilter && $store.state.selects.selects?.subcat.length") Чтобы увидеть другие категории нажмите «Сбросить»
 
         .filter__options-wrapper(v-else)
           .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.pl10px.cp(
@@ -171,7 +171,7 @@ export default {
     },
     getSubcategory () {
       const subcatArr = []
-      this.$store.state.selects.selects.subcat.forEach(subcatObj => {
+      this.$store.state.selects?.selects?.subcat.forEach(subcatObj => {
         if (this.$route.path.includes(subcatObj?.subcategory_t.toLowerCase())) {
           subcatArr.push(subcatObj)
         }
