@@ -65,6 +65,21 @@ export const actions = {
           }
         })
         if (sizesArr.length) filtersObj.findObj.sizes = { $in: sizesArr }
+        // получаю цену если есть
+        const priceArr = []
+        const pathArr = path.split('/')
+        pathArr.forEach(pathStr => {
+          if (pathStr.includes('from-') && pathStr.includes('-to-')) {
+            priceArr.push(...pathStr.replace('from-', '').split('-to-'))
+          }
+        })
+        if (priceArr.length) filtersObj.findObj.price = { $in: priceArr }
+
+      //     [...Array.from(Array(10000000).keys(),x => x + 199)]
+      // .reduce((acc, price) => {
+      //     if (this.$route.path.includes(price)) acc.push(price)
+      //     return acc
+      //   }, []).sort()
 
         // запрос на получение продуктов
         const products = await this.$axios.post('/products', filtersObj)

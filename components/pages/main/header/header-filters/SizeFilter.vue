@@ -122,7 +122,6 @@ export default {
       this.UNSET_URL_PARAM({ param: '5size' })
     },
     resetFilter () {
-      this.query = ''
       this.unsetFilterParam()
       this.unsetFindParam()
       this.unsetUrlParam()

@@ -17,7 +17,7 @@
             nuxt-link.tooltip-link(to="/lk") себя в профиле
 
         .df.pos-rel.mt14px(@click.stop)
-          input.menu-search.menu-search_filter(v-model="query" placeholder="Поиск")
+          input.menu-search.menu-search_filter(v-model.trim="query" placeholder="Поиск")
           IconSearchMenuLinks.pos-abs.t6px.l8px(color="#B3B3B3")
           div(v-if="query" @click="query = ''")
             IconCloseSearch.pos-abs.t7px.r8px
@@ -208,6 +208,7 @@ export default {
             variant: data.type,
             autoHideDelay: 5000
           })
+          this.query = ''
           setTimeout(() => this.isDisabledAddFilter = false, 60 * 1000)
         } catch (e) {}
       }
