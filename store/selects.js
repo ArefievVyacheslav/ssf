@@ -74,12 +74,10 @@ export const actions = {
           }
         })
         if (priceArr.length) filtersObj.findObj.price = { $in: priceArr }
-
-      //     [...Array.from(Array(10000000).keys(),x => x + 199)]
-      // .reduce((acc, price) => {
-      //     if (this.$route.path.includes(price)) acc.push(price)
-      //     return acc
-      //   }, []).sort()
+        // получаю рассрочку если есть
+        path.includes('installment')
+          ? filtersObj.findObj.installment = true
+          : filtersObj.findObj.installment = { $in: [ true, false ] }
 
         // запрос на получение продуктов
         const products = await this.$axios.post('/products', filtersObj)

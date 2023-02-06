@@ -3,7 +3,7 @@
     @click="isShowSubcategoryList = !isShowSubcategoryList" :class="{ 'filter__item_hover': !disabled, 'cnd': disabled }"
   )
     h3.filter__name.filter__name_gender(:class="{ disabled }") Категория
-    .number-selected-options.ml6px(v-if="currentSubcategoryArr.length") {{ currentSubcategoryArr.length }}
+    .number-selected-options.pos-abs.ml78px(v-if="currentSubcategoryArr.length") {{ currentSubcategoryArr.length }}
     IconArrowDownGreyMedium.menu-links__icon-arrow-down.ml19px(
       :disabled="disabled" :class="{ 'menu-links__icon-arrow-down-active': isShowSubcategoryList && !disabled }"
     )

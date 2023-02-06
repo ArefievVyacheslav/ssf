@@ -8,7 +8,11 @@
 <script>
 export default {
   name: "Switcher",
-  data: () => ({ isChecked: false })
+  props: [ 'param' ],
+  data: () => ({ isChecked: false }),
+  created () {
+    if (this.param === 'installment' && this.$route.path.includes('installment')) this.isChecked = true
+  }
 };
 </script>
 
