@@ -51,7 +51,7 @@ export default {
   bootstrapVue: {
     bootstrapCSS: false,
     bootstrapVueCSS: false,
-    componentPlugins: ['Tooltip', 'Modal', 'Toast' ],
+    componentPlugins: ['Tooltip', 'Modal', 'Toast', 'Sidebar' ],
     directivePlugins: []
   },
   webfontloader: {

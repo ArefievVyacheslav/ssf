@@ -1,7 +1,7 @@
 <template lang="pug">
   .filter__item.filter__item_hover.filter__item_gender.pos-rel.df.jcsb.aic.cp(@click="isShowGenderList = !isShowGenderList")
     h3.filter__name.filter__name_gender Пол
-    .number-selected-options.ml6px(v-if="currentGender") 1
+    .number-selected-options.pos-abs.ml32px(v-if="currentGender") 1
     IconArrowDownGreyMedium.menu-links__icon-arrow-down.ml19px(
       :active="isShowGenderList" :class="{ 'menu-links__icon-arrow-down-active': isShowGenderList }"
     )

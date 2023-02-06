@@ -3,7 +3,7 @@
     @click="isShowBrandList = !isShowBrandList" :class="{ 'filter__item_hover': !disabled, 'cnd': disabled }"
   )
     h3.filter__name.filter__name_gender(:class="{ disabled }") Бренд
-    .number-selected-options.ml6px(v-if="currentBrandArr.length") {{ currentBrandArr.length }}
+    .number-selected-options.pos-abs.ml50px(v-if="currentBrandArr.length") {{ currentBrandArr.length }}
     IconArrowDownGreyMedium.menu-links__icon-arrow-down.ml19px(
       :disabled="disabled" :class="{ 'menu-links__icon-arrow-down-active': isShowBrandList && !disabled }"
     )

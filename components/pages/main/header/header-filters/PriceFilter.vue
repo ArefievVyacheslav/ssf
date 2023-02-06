@@ -38,7 +38,7 @@ export default {
           const priceArr = nV.toString().split('')
           if (priceArr[0] === '0') priceArr.splice(0, 1)
           this.endPrice = +priceArr.filter(symbol => !isNaN(symbol)).join('').substring(0, 6)
-        } else this.endPrice = 0
+        } else this.endPrice = 999999
       }
     },
     priceArr () {
@@ -52,7 +52,7 @@ export default {
           variant: "info",
           autoHideDelay: 15000
         });
-      }, 60 * 1000)
+      }, 15 * 1000)
     },
     '$store.state.selects.selects.price': {
       handler () {
@@ -102,12 +102,12 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '5price',
+        param: '6price',
         value: `from-${ this.startPrice }-to-${ this.endPrice }`
       })
     },
     unsetUrlParam () {
-      this.UNSET_URL_PARAM({ param: '5price' })
+      this.UNSET_URL_PARAM({ param: '6price' })
     },
     async setPrice () {
       this.setFilterParam()
@@ -144,6 +144,10 @@ export default {
 </script>
 
 <style lang="scss">
+  .filter__item_price:after {
+    display: none;
+  }
+
   .filter__item_price {
     width: 195px;
 
