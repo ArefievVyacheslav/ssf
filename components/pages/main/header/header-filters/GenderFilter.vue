@@ -53,6 +53,7 @@ export default {
         this.setFilterParam()
         this.setFindParam()
         this.setUrlParam()
+        this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
         if (this.init) await this.FETCH_SELECTS()
       } else {
         this.unsetFilterParam()

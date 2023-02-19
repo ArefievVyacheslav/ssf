@@ -21,7 +21,7 @@ export default {
   created () {
     this.$root.$on('show-extra-filters', condition => this.isShowExtraSidebar = condition)
     this.$root.$on('count-extra-filters', count => {
-      count === 1 ? this.countExtraFilters += count : this.countExtraFilters -= 1
+      this.countExtraFilters = count
     })
   }
 };

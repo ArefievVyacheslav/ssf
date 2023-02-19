@@ -1,14 +1,14 @@
 <template lang="pug">
   .filter__item.filter__item_size.pos-rel.df.jcsb.aic.cp(
-    @click="isShowBrandList = !isShowBrandList" :class="{ 'filter__item_hover': !disabled, 'cnd': disabled }"
+    @click="isShowSizeList = !isShowSizeList" :class="{ 'filter__item_hover': !disabled, 'cnd': disabled }"
   )
     h3.filter__name.filter__name_gender(:class="{ disabled }") Размер
     .number-selected-options.pos-abs.ml58px(v-if="currentSizeArr.length") {{ currentSizeArr.length }}
     IconArrowDownGreyMedium.menu-links__icon-arrow-down.ml19px(
-      :disabled="disabled" :class="{ 'menu-links__icon-arrow-down-active': isShowBrandList && !disabled }"
+      :disabled="disabled" :class="{ 'menu-links__icon-arrow-down-active': isShowSizeList && !disabled }"
     )
-    .filter__dropdown.pos-abs(v-if="isShowBrandList && !disabled")
-      DropDown(@close="isShowBrandList = false" :styles="{ padding: '16px 20px 20px 20px', 'width': '214px' }")
+    .filter__dropdown.pos-abs(v-if="isShowSizeList && !disabled")
+      DropDown(@close="isShowSizeList = false" :styles="{ padding: '16px 20px 20px 20px', 'width': '214px' }")
         .df.aic
           span.dropdown-header.toe.wsn.oh Выбор размера
           IconTooltip#tooltip-dropdown-language.ml6px
@@ -31,7 +31,7 @@
           button.filter__dropdown-btn.filter__dropdown-btn-disagree.df.jcc.aic.mt12px.cp(
             v-if="currentSizeArr.length" @click.stop="currentSizeArr = []; resetFilter()"
           ) Сбросить
-          button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="isShowBrandList = false; FETCH_SELECTS()") Готово
+          button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="acceptParameters") Готово
 
 </template>
 
@@ -48,7 +48,7 @@ export default {
   props: [ 'disabled' ],
   data: () => ({
     currentSizeArr: [],
-    isShowBrandList: false,
+    isShowSizeList: false,
     init: false
   }),
   computed: {
@@ -125,7 +125,13 @@ export default {
       this.unsetFilterParam()
       this.unsetFindParam()
       this.unsetUrlParam()
+      this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
       this.FETCH_SELECTS()
+    },
+    acceptParameters () {
+      this.isShowSizeList = false
+      this.FETCH_SELECTS()
+      this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
     },
     getSize () {
       const sizesArr = []

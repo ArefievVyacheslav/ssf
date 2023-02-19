@@ -53,7 +53,7 @@
           button.filter__dropdown-btn.filter__dropdown-btn-disagree.df.jcc.aic.mt12px.cp(
             v-if="currentBrandArr.length" @click.stop="currentBrandArr = []; resetFilter()"
           ) Сбросить
-          button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="isShowBrandList = false; FETCH_SELECTS()") Готово
+          button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="acceptParameters") Готово
 
     Modal(@modal-ok="addBrands" ident="add-brand-modal" title="Добавление бренда" okTitle="Предложить" cancelTitle="Отменить")
       template(v-slot:modal-desc)
@@ -175,7 +175,13 @@ export default {
       this.unsetFilterParam()
       this.unsetFindParam()
       this.unsetUrlParam()
+      this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
       this.FETCH_SELECTS()
+    },
+    acceptParameters () {
+      this.isShowBrandList = false
+      this.FETCH_SELECTS()
+      this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
     },
     getBrand () {
       const brandArr = []

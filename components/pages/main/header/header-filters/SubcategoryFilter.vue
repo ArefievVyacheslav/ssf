@@ -50,7 +50,7 @@
           button.filter__dropdown-btn.filter__dropdown-btn-disagree.df.jcc.aic.mt12px.cp(
             v-if="currentSubcategoryArr.length" @click.stop="currentSubcategoryArr = []; resetFilter()"
           ) Сбросить
-          button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="isShowSubcategoryList = false; FETCH_SELECTS()") Готово
+          button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="acceptParameters") Готово
 
 </template>
 
@@ -167,7 +167,13 @@ export default {
       this.unsetFilterParam()
       this.unsetFindParam()
       this.unsetUrlParam()
+      this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
       this.FETCH_SELECTS()
+    },
+    acceptParameters () {
+      this.isShowSubcategoryList = false
+      this.FETCH_SELECTS()
+      this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
     },
     getSubcategory () {
       const subcatArr = []
