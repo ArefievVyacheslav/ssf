@@ -22,6 +22,7 @@ module.exports = {
     'no-unused-expressions': 'off',
     'array-callback-return': 'off',
     'no-return-assign': 'off',
+    'no-self-compare': 'off',
     'dot-notation': 'off',
   },
 }

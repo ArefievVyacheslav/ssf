@@ -9,16 +9,18 @@
         IconCloseModal.extra-filters__icon-close.cp
 
     InstallmentFilter(@is-installment="toggleFilterCount")
+    SaleSizeFilter(@is-sale-size="toggleFilterCount")
 
 </template>
 
 <script>
 import IconCloseModal from "@/components/ui/icons/IconCloseModal.vue";
 import InstallmentFilter from "@/components/pages/main/header/header-filters/sidebar-filters/InstallmentFilter.vue";
+import SaleSizeFilter from "@/components/pages/main/header/header-filters/sidebar-filters/SaleSizeFilter.vue";
 
 export default {
   name: "ExtraFilterSidebar",
-  components: { InstallmentFilter, IconCloseModal },
+  components: { SaleSizeFilter, InstallmentFilter, IconCloseModal },
   data: () => ({ isShowExtraFilters: false, conditionExtraFilters: null, filterCount: 0 }),
   watch: {
     isShowExtraFilters (nV) {
@@ -48,10 +50,10 @@ export default {
       document.querySelector('.b-sidebar-outer').classList.remove('b-open-sidebar-right')
       document.body.style.overflow = 'initial'
     },
-    toggleFilterCount (condition) {
-      condition
-        ? this.filterCount = 1
-        : this.filterCount = 0
+    toggleFilterCount (count) {
+      count
+        ? this.filterCount ? this.filterCount += 1 : this.filterCount = 1
+        : this.filterCount ? this.filterCount -= 1 : this.filterCount = 0
     }
   }
 };
@@ -97,7 +99,8 @@ export default {
     }
 
     .extra-filters__filter {
-      height: 49px;
+      padding-top: 16px;
+      padding-bottom: 16px;
       border-bottom: 1px solid #EAECF1;
 
       .extra-filters__filter-name {

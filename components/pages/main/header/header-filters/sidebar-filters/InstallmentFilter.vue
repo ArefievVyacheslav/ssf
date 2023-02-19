@@ -21,7 +21,7 @@ export default {
       this.setFilterParam()
       this.setFindParam()
       if (this.init) await this.FETCH_SELECTS()
-      this.$emit('is-installment', nV)
+      this.$emit('is-installment', nV ? 1 : 0)
     },
     '$store.state.filters.collection': {
       handler () {

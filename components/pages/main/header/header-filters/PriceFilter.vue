@@ -42,7 +42,8 @@ export default {
       }
     },
     priceArr () {
-      this.fetchEntriesDebounced()
+      if (this.$store.state.selects.selects.price[0]
+        && this.$store.state.selects.selects.price[1]) this.fetchEntriesDebounced()
     },
     editMode (nV) {
       if (nV === true) setTimeout(() => {
