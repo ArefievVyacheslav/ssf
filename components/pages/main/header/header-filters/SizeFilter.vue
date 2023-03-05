@@ -112,8 +112,8 @@ export default {
       this.SET_URL_PARAM({
         param: '5size',
         value: this.currentSizeArr.reduce((acc, size, idx) => {
-          if (idx !== this.currentSizeArr.length - 1) acc += size.toLowerCase() + '-'
-          else acc += size.toLowerCase()
+          if (idx !== this.currentSizeArr.length - 1) acc += '-' + size.toLowerCase() + '-'
+          else acc += '-' + size.toLowerCase() + '-'
           return acc
         }, '')
       })
@@ -135,14 +135,16 @@ export default {
     },
     getSize () {
       const sizesArr = []
-      this.$store.state.selects.selects.size.forEach(sizeStr => {
-        if (this.$route.path.includes('/' + sizeStr.toLowerCase()) || this.$route.path.includes('-' + sizeStr.toLowerCase())) {
-          sizesArr.push(sizeStr)
-        }
-      })
-      if (!sizesArr.length) sizesArr.push(...this.currentSizeArr)
-      else this.currentSizeArr = sizesArr
-      this.SET_FILTER_PARAM({ param: 'sizes', value: sizesArr })
+      setTimeout(() => {
+        this.$store.state.selects.selects.size.forEach(sizeStr => {
+          if (this.$route.path.includes('/-' + sizeStr.toLowerCase() + '-') || this.$route.path.includes('-' + sizeStr.toLowerCase() + '-')) {
+            sizesArr.push(sizeStr)
+          }
+        })
+        if (!sizesArr.length) sizesArr.push(...this.currentSizeArr)
+        else this.currentSizeArr = sizesArr
+        this.SET_FILTER_PARAM({ param: 'sizes', value: sizesArr })
+      }, 1000)
     },
     toggleSubcategory (sizeStr) {
       this.currentSizeArr.includes(sizeStr)

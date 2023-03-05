@@ -177,14 +177,16 @@ export default {
     },
     getSubcategory () {
       const subcatArr = []
-      this.$store.state.selects?.selects?.subcat.forEach(subcatObj => {
-        if (this.$route.path.includes(subcatObj?.subcategory_t.toLowerCase())) {
-          subcatArr.push(subcatObj)
-        }
-      })
-      if (!subcatArr.length) subcatArr.push(...this.currentSubcategoryArr)
-      else this.currentSubcategoryArr = subcatArr
-      this.SET_FILTER_PARAM({ param: 'subcategory', value: subcatArr })
+      setTimeout(() => {
+        this.$store.state.selects?.selects?.subcat.forEach(subcatObj => {
+          if (this.$route.path.includes(subcatObj?.subcategory_t.toLowerCase())) {
+            subcatArr.push(subcatObj)
+          }
+        })
+        if (!subcatArr.length) subcatArr.push(...this.currentSubcategoryArr)
+        else this.currentSubcategoryArr = subcatArr
+        this.SET_FILTER_PARAM({ param: 'subcategory', value: subcatArr })
+      }, 1000)
     },
     toggleSubcategory (subcatObj) {
       this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory).includes(subcatObj.subcategory)

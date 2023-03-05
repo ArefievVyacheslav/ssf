@@ -38,12 +38,12 @@ export default {
           const priceArr = nV.toString().split('')
           if (priceArr[0] === '0') priceArr.splice(0, 1)
           this.endPrice = +priceArr.filter(symbol => !isNaN(symbol)).join('').substring(0, 6)
-        } else this.endPrice = 999999
+        }
       }
     },
-    priceArr () {
-      if (this.$store.state.selects.selects.price[0]
-        && this.$store.state.selects.selects.price[1]) this.fetchEntriesDebounced()
+    priceArr (nV) {
+      if (this.$store.state.selects.selects.price[0] && this.$store.state.selects.selects.price[0] !== nV[0]
+        || this.$store.state.selects.selects.price[1] && this.$store.state.selects.selects.price[1] !== nV[1]) this.fetchEntriesDebounced()
     },
     editMode (nV) {
       if (nV === true) setTimeout(() => {
@@ -51,7 +51,7 @@ export default {
         this.$bvToast.toast("Если мало вариантов в фильтрах - измените диапазон цены.", {
           title: "BootstrapVue Toast",
           variant: "info",
-          autoHideDelay: 15000
+          autoHideDelay: 10000
         });
       }, 15 * 1000)
     },
@@ -69,15 +69,17 @@ export default {
     fetchEntriesDebounced () {
       clearTimeout(this._timerId)
       this._timerId = setTimeout(async () => {
+        if (!this.endPrice && !this.editMode) this.endPrice = 999999
         if (this.startPrice && this.endPrice) {
           if (this.startPrice > this.endPrice) {
-            this.endPrice = 999999;
+            this.endPrice = 999999
             this.$bvToast.toast("Максимальная цена меньше минимальной, мы установим максимальное значение.", {
               title: "BootstrapVue Toast",
               variant: "info",
               autoHideDelay: 5000
             });
           }
+          if (!this.endPrice) this.endPrice = 999999
           await this.setPrice()
         }
         if (!this.startPrice && !this.endPrice) this.resetFilter()
@@ -124,15 +126,17 @@ export default {
     },
     getPrice () {
       const priceArr = []
-      const pathArr = this.$route.path.split('/')
-      pathArr.forEach(pathStr => {
-        if (pathStr.includes('from-') && pathStr.includes('-to-')) {
-          priceArr.push(...pathStr.replace('from-', '').split('-to-'))
-        }
-      })
-      if (priceArr.length) [ this.startPrice, this.endPrice ] = priceArr
-      else [ this.startPrice, this.endPrice ] = this.$store.state.selects.selects.price
-      this.SET_FILTER_PARAM({ param: 'price', value: [ this.startPrice, this.endPrice ] })
+      setTimeout(() => {
+        const pathArr = this.$route.path.split('/')
+        pathArr.forEach(pathStr => {
+          if (pathStr.includes('from-') && pathStr.includes('-to-')) {
+            priceArr.push(...pathStr.replace('from-', '').split('-to-'))
+          }
+        })
+        if (priceArr.length) [ this.startPrice, this.endPrice ] = priceArr
+        else [ this.startPrice, this.endPrice ] = this.$store.state.selects.selects.price
+        this.SET_FILTER_PARAM({ param: 'price', value: [ this.startPrice, this.endPrice ] })
+      }, 1000)
     }
   },
   created () {
@@ -191,7 +195,7 @@ export default {
         font-size: 14px;
         line-height: 17px;
         letter-spacing: 0.02em;
-        color: #B3B3B3;
+        color: #303030;
       }
       .filter__item-price-field:disabled {
         background-color: white;
