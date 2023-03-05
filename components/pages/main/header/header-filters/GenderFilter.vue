@@ -49,11 +49,17 @@ export default {
   }),
   watch: {
     async currentGender (nV) {
+      this.RESET_FILTERS()
       if (nV) {
         this.setFilterParam()
         this.setFindParam()
         this.setUrlParam()
         this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
+        this.$bvToast.toast('Загружаю фильтры... Подождите.', {
+          title: 'BootstrapVue Toast',
+          variant: 'info',
+          autoHideDelay: 2000
+        })
         if (this.init) await this.FETCH_SELECTS()
       } else {
         this.unsetFilterParam()
@@ -66,7 +72,7 @@ export default {
   },
   methods: {
     ...mapActions('selects', [ 'FETCH_SELECTS' ]),
-    ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'UNSET_FILTER_PARAM', 'SET_FIND_PARAM', 'UNSET_FIND_PARAM', 'TOGGLE_DISABLED' ]),
+    ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'UNSET_FILTER_PARAM', 'SET_FIND_PARAM', 'UNSET_FIND_PARAM', 'TOGGLE_DISABLED', 'RESET_FILTERS' ]),
     ...mapMutations('catalog', [ 'SET_URL_PARAM', 'UNSET_URL_PARAM' ]),
     ...mapMutations('selects', [ 'SET_SELECTS' ]),
     setFilterParam () {
@@ -107,12 +113,14 @@ export default {
       this.UNSET_URL_PARAM({ param: '2gender' })
     },
     getGender () {
-      this.genderOptions.forEach(genderObj => {
-        if (this.$route.path.includes(genderObj.url)) {
-          this.SET_FILTER_PARAM({ param: 'gender', value: genderObj.name })
-          this.currentGender = genderObj
-        }
-      })
+      setTimeout(() => {
+        this.genderOptions.forEach(genderObj => {
+          if (this.$route.path.includes(genderObj.url)) {
+            this.SET_FILTER_PARAM({ param: 'gender', value: genderObj.name })
+            this.currentGender = genderObj
+          }
+        })
+      }, 1000)
     },
     toggleGender (genderObj) {
       this.currentGender === genderObj

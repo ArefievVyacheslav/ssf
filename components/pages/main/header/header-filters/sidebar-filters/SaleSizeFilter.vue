@@ -10,18 +10,19 @@
 
     .extra-filters__choices(v-if="isShowSaleSizeFilter")
       .dropdown-choice-count.mt12px.mb10px Выбрано: {{ currentSaleSize.length }}
-      .filter__options-item.filter__options-item-subcategory.df.aic.mt12px.mt7px.cp(
-        v-for="saleObj,idx in saleSizeOptions" :key="saleObj.text" @click="toggleSaleSize(saleObj)"
-        :class="{ 'filter__options-item_active': currentSaleSize.includes(saleObj) }"
-      )
-        .df.aic.pl10px
-          Checkbox(:is-checked="currentSaleSize.includes(saleObj)" styles="top: 3px; left: 3px;")
-          span.gender__name.ml8px {{ saleObj.text }}
+      .extra-filters__options-wrapper
+        .filter__options-item.filter__options-item-subcategory.df.aic.cp(
+          v-for="saleObj,idx in saleSizeOptions" :key="saleObj.text" @click="toggleSaleSize(saleObj)"
+          :class="{ 'filter__options-item_active': currentSaleSize.includes(saleObj), 'mt12px mt7px': idx !== 0 }"
+        )
+          .df.aic.pl10px
+            Checkbox(:is-checked="currentSaleSize.includes(saleObj)" styles="top: 3px; left: 3px;")
+            span.gender__name.ml8px {{ saleObj.text }}
 
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 import IconArrowDownGreyMedium from "@/components/ui/icons/arrows/IconArrowDownGreyMedium.vue";
 import Checkbox from "@/components/ui/blocks/Checkbox.vue";
 
@@ -46,7 +47,7 @@ export default {
     init: false
   }),
   watch: {
-    async currentSaleSize (nV) {
+    currentSaleSize (nV) {
       if (nV.length) {
         this.setUrlParam()
         this.setFilterParam()
@@ -58,7 +59,6 @@ export default {
         this.unsetFindParam()
         this.isChangeSaleSize = false
       }
-      if (this.init) await this.FETCH_SELECTS()
     },
     isChangeSaleSize (nV) {
       this.$emit('is-sale-size', nV ? 1 : 0)
@@ -66,14 +66,13 @@ export default {
     '$store.state.filters.collection': {
       handler () {
         if (this.init) {
-          this.currentSaleSize = [];
-          this.isChangeSaleSize = false;
+          this.currentSaleSize = []
+          this.isChangeSaleSize = false
         }
       }
     }
   },
   methods: {
-    ...mapActions('selects', [ 'FETCH_SELECTS' ]),
     ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'UNSET_FILTER_PARAM', 'SET_FIND_PARAM', 'UNSET_FIND_PARAM' ]),
     ...mapMutations('catalog', [ 'SET_URL_PARAM', 'UNSET_URL_PARAM' ]),
     setFilterParam () {
@@ -113,7 +112,7 @@ export default {
         this.saleSizeOptions.forEach(sizeObj => {
           if (sale <= sizeObj.value.$gt) this.currentSaleSize.push(sizeObj)
         })
-        this.SET_FIND_PARAM({ param: 'sale', value: { $gt: sale } })
+        this.SET_FILTER_PARAM({ param: 'sale', value: { $gt: sale } })
       }
     },
     toggleSaleSize (saleObj) {
@@ -148,36 +147,40 @@ export default {
     }
 
     .extra-filters__choices {
-      max-height: 265px;
-      overflow-y: auto;
 
-      .filter__options-item {
-        height: 32px;
-        font-family: 'Inter', serif;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 12px;
-        line-height: 15px;
-        letter-spacing: 0.02em;
-        color: #616161;
-      }
+      .extra-filters__options-wrapper {
+        max-height: 261px;
+        padding-right: 8px;
+        overflow-y: auto;
 
-      .filter__options-item:hover {
-        background: #F6F7F9;
-        border-radius: 6px;
-      }
-      .filter__options-item:hover .checkbox {
-        outline: 2px solid #2D78EA;
-      }
-      .filter__options-item:hover .gender__name {
-        color: #2D78EA;
-      }
-      .filter__options-item_active:hover .checkbox {
-        outline: 2px solid #6BA0F0;
-        background: #6BA0F0;
-      }
-      .filter__options-item_active:hover .gender__name {
-        color: #6BA0F0;
+        .filter__options-item {
+          height: 32px;
+          font-family: 'Inter', serif;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 15px;
+          letter-spacing: 0.02em;
+          color: #616161;
+        }
+
+        .filter__options-item:hover {
+          background: #F6F7F9;
+          border-radius: 6px;
+        }
+        .filter__options-item:hover .checkbox {
+          outline: 2px solid #2D78EA;
+        }
+        .filter__options-item:hover .gender__name {
+          color: #2D78EA;
+        }
+        .filter__options-item_active:hover .checkbox {
+          outline: 2px solid #6BA0F0;
+          background: #6BA0F0;
+        }
+        .filter__options-item_active:hover .gender__name {
+          color: #6BA0F0;
+        }
       }
     }
   }

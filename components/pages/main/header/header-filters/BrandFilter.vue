@@ -185,14 +185,16 @@ export default {
     },
     getBrand () {
       const brandArr = []
-      this.$store.state.selects.selects.brand.forEach(brandStr => {
-        if (this.$route.path.includes(brandStr.toLowerCase().replaceAll(' ', '-'))) {
-          brandArr.push(brandStr)
-        }
-      })
-      if (!brandArr.length) brandArr.push(...this.currentBrandArr)
-      else this.currentBrandArr = brandArr
-      this.SET_FILTER_PARAM({ param: 'brand', value: brandArr })
+      setTimeout(() => {
+        this.$store.state.selects.selects.brand.forEach(brandStr => {
+          if (this.$route.path.includes(brandStr.toLowerCase().replaceAll(' ', '-'))) {
+            brandArr.push(brandStr)
+          }
+        })
+        if (!brandArr.length) brandArr.push(...this.currentBrandArr)
+        else this.currentBrandArr = brandArr
+        this.SET_FILTER_PARAM({ param: 'brand', value: brandArr })
+      }, 1000)
     },
     toggleSubcategory (brandStr) {
       this.currentBrandArr.includes(brandStr)

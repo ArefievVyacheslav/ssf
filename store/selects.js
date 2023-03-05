@@ -16,6 +16,7 @@ export const actions = {
       }
       // если первая инициализация на категории - отправляю запрос на получение продуктов - (распаршиваю из урла получив селекты)
       if (path.includes('/catalog/')) {
+        const pathArr = path.split('/')
         // стандартные главные параметры
         const languages = [ '/rb', '/kz', '/am', '/kg', '/az', '/md', '/tj', '/uz', '/tm' ]
         const collections = [ 'clothes', 'shoes', 'accessories' ]
@@ -27,12 +28,12 @@ export const actions = {
         const filtersObj = { collection, findObj, sortObj, pagination: { page: 1, show: 60 } }
         // формирую первичный объект фильтров для запроса на селекты
         if (path.includes('/page-')) {
-          path.split('/').forEach(paramStr => {
+          pathArr.forEach(paramStr => {
             if (paramStr.includes('page-')) filtersObj.pagination.page = +paramStr.replace('page-', '')
           })
         }
         if (path.includes('/show-')) {
-          path.split('/').forEach(paramStr => {
+          pathArr.forEach(paramStr => {
             if (paramStr.includes('show-')) filtersObj.pagination.show = +paramStr.replace('show-', '')
           })
         }
@@ -41,7 +42,7 @@ export const actions = {
         genders.map(genderObj => genderObj.url).forEach((genderUrl,idx) => path.includes(genderUrl) ? filtersObj.findObj.gender = genders[ idx ].name : null)
 
         const { data } = await this.$axios.post('/selects', filtersObj)
-        // получаю категории если есть
+        // получаю подкатегории если есть
         const subcatArr = []
         data.subcat.forEach(subcatObj => {
           if (path.includes(subcatObj?.subcategory_t.toLowerCase())) {
@@ -60,14 +61,13 @@ export const actions = {
         // получаю размеры если есть
         const sizesArr = []
         data.size.forEach(sizeStr => {
-          if (path.includes('/' + sizeStr.toLowerCase()) || path.includes('-' + sizeStr.toLowerCase())) {
+          if (path.includes('/-' + sizeStr.toLowerCase() + '-') || path.includes('-' + sizeStr.toLowerCase() + '-')) {
             sizesArr.push(sizeStr)
           }
         })
         if (sizesArr.length) filtersObj.findObj.sizes = { $in: sizesArr }
         // получаю цену если есть
         const priceArr = []
-        const pathArr = path.split('/')
         pathArr.forEach(pathStr => {
           if (pathStr.includes('from-') && pathStr.includes('-to-')) {
             priceArr.push(...pathStr.replace('from-', '').split('-to-'))
@@ -78,6 +78,18 @@ export const actions = {
         path.includes('installment')
           ? filtersObj.findObj.installment = true
           : filtersObj.findObj.installment = { $in: [ true, false ] }
+        // получаю скидку если есть
+        pathArr.forEach(pathStr => {
+          if (pathStr.includes('discount')) filtersObj.findObj.sale = { $gt: +pathStr.replace('discount-', '') - 1 }
+        })
+        // получаю магазин если есть
+        const shopArr = []
+        data.shop.forEach(shopStr => {
+          if (path.includes(shopStr.toLowerCase().replaceAll(' ', '-'))) {
+            shopArr.push(shopStr)
+          }
+        })
+        if (shopArr.length) filtersObj.findObj.shop = { $in: shopArr }
 
         // запрос на получение продуктов
         const products = await this.$axios.post('/products', filtersObj)
