@@ -118,7 +118,7 @@ export default {
         })
         if (!shopArr.length) shopArr.push(...this.currentShop)
         else this.currentShop = shopArr
-        this.SET_FIND_PARAM({ param: 'shop', value: { $in: this.currentShop } })
+        if (this.currentShop.length) this.SET_FIND_PARAM({ param: 'shop', value: { $in: this.currentShop } })
       }, 1000)
     },
     toggleShop (shopStr) {

@@ -11,6 +11,7 @@
     InstallmentFilter(@is-installment="toggleFilterCount")
     SaleSizeFilter(@is-sale-size="toggleFilterCount")
     ShopFilter(@is-shop="toggleFilterCount")
+    ColorFilter
 
 </template>
 
@@ -20,10 +21,11 @@ import InstallmentFilter from "@/components/pages/main/header/header-filters/sid
 import SaleSizeFilter from "@/components/pages/main/header/header-filters/sidebar-filters/SaleSizeFilter.vue";
 import BrandFilter from "@/components/pages/main/header/header-filters/BrandFilter.vue";
 import ShopFilter from "@/components/pages/main/header/header-filters/sidebar-filters/ShopFilter.vue";
+import ColorFilter from "@/components/pages/main/header/header-filters/sidebar-filters/ColorFilter.vue";
 
 export default {
   name: "ExtraFilterSidebar",
-  components: { ShopFilter, BrandFilter, SaleSizeFilter, InstallmentFilter, IconCloseModal },
+  components: { ColorFilter, ShopFilter, BrandFilter, SaleSizeFilter, InstallmentFilter, IconCloseModal },
   data: () => ({ isShowExtraFilters: false, conditionExtraFilters: null, filterCount: 0 }),
   watch: {
     isShowExtraFilters (nV) {
