@@ -29,7 +29,7 @@
 import { mapActions, mapMutations } from "vuex";
 import IconArrowDownGreyMedium from "@/components/ui/icons/arrows/IconArrowDownGreyMedium.vue";
 import DropDown from "@/components/ui/blocks/DropDown.vue";
-import IconTooltip from "@/components/ui/icons/IconTooltip.vue";
+import IconTooltip from "@/components/ui/icons/IconTooltipQuestion.vue";
 import Checkbox from "@/components/ui/blocks/Checkbox.vue";
 
 export default {
@@ -105,12 +105,12 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '2gender',
+        param: 'a-gender',
         value: this.currentGender?.url
       })
     },
     unsetUrlParam () {
-      this.UNSET_URL_PARAM({ param: '2gender' })
+      this.UNSET_URL_PARAM({ param: 'a-gender' })
     },
     getGender () {
       setTimeout(() => {

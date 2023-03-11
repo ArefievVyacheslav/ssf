@@ -33,6 +33,7 @@ export default {
     scss: ['~/assets/styles/main.scss']
   },
   plugins: [
+    // { src: '@/plugins/socket', ssr: false }
   ],
   components: true,
   buildModules: [

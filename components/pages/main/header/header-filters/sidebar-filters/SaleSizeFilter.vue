@@ -29,6 +29,7 @@ import Checkbox from "@/components/ui/blocks/Checkbox.vue";
 export default {
   name: "SaleSizeFilter",
   components: { Checkbox, IconArrowDownGreyMedium },
+  props: [ 'reset' ],
   data: () => ({
     saleSizeOptions: [
       { text: '10% и более', url: 'discount-10', value: { $gt: 9 } },
@@ -59,6 +60,9 @@ export default {
         this.unsetFindParam()
         this.isChangeSaleSize = false
       }
+    },
+    reset (nV) {
+      if (nV) this.currentSaleSize = []
     },
     isChangeSaleSize (nV) {
       this.$emit('is-sale-size', nV ? 1 : 0)
@@ -95,12 +99,12 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '8sale',
+        param: 'g-sale',
         value: this.currentSaleSize.length ? this.currentSaleSize[0].url : ''
       })
     },
     unsetUrlParam () {
-      this.UNSET_URL_PARAM({ param: '8sale' })
+      this.UNSET_URL_PARAM({ param: 'g-sale' })
     },
     getSaleSize () {
       let sale
@@ -112,6 +116,7 @@ export default {
         this.saleSizeOptions.forEach(sizeObj => {
           if (sale <= sizeObj.value.$gt) this.currentSaleSize.push(sizeObj)
         })
+        this.isChangeSaleSize = true
         this.SET_FILTER_PARAM({ param: 'sale', value: { $gt: sale } })
       }
     },

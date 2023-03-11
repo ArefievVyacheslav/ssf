@@ -22,11 +22,6 @@ export default {
       this.setFindParam()
       if (this.init) await this.FETCH_SELECTS()
       this.$emit('is-installment', nV ? 1 : 0)
-    },
-    '$store.state.filters.collection': {
-      handler () {
-        if (this.init) this.isInstallment = false
-      }
     }
   },
   methods: {
@@ -53,12 +48,12 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '7installment',
+        param: 'f-installment',
         value: this.isInstallment ? 'installment' : ''
       })
     },
     unsetUrlParam () {
-      this.UNSET_URL_PARAM({ param: '7installment' })
+      this.UNSET_URL_PARAM({ param: 'f-installment' })
     },
     getInstallment () {
       this.isInstallment = this.$route.path.includes('installment')
