@@ -8,7 +8,7 @@
 
 export default {
   name: "subcategory",
-  layout: 'default',
+  layout: 'default'
   // async fetch () {
   //   await this.FETCH_SELECTS()
   // },

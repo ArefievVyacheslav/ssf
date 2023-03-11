@@ -58,7 +58,7 @@
 import { mapActions, mapMutations } from "vuex";
 import IconArrowDownGreyMedium from "@/components/ui/icons/arrows/IconArrowDownGreyMedium.vue";
 import DropDown from "@/components/ui/blocks/DropDown.vue";
-import IconTooltip from "@/components/ui/icons/IconTooltip.vue";
+import IconTooltip from "@/components/ui/icons/IconTooltipQuestion.vue";
 import Checkbox from "@/components/ui/blocks/Checkbox.vue";
 import IconSearchMenuLinks from "@/components/ui/icons/menu-links/IconSearchMenuLinks.vue";
 import IconCloseSearch from "@/components/ui/icons/IconCloseSearch.vue";
@@ -151,7 +151,7 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '3subcategory',
+        param: 'b-subcategory',
         value: this.currentSubcategoryArrNameEn.reduce((acc, subcatT, idx) => {
           if (idx !== this.currentSubcategoryArrNameEn.length - 1) acc += subcatT + '--'
           else acc += subcatT
@@ -160,7 +160,7 @@ export default {
       })
     },
     unsetUrlParam () {
-      this.UNSET_URL_PARAM({ param: '3subcategory' })
+      this.UNSET_URL_PARAM({ param: 'b-subcategory' })
     },
     resetFilter () {
       this.query = ''
@@ -249,6 +249,7 @@ export default {
   }
 
   .filter__dropdown-btn {
+    max-height: 41px;
     border-radius: 10px;
     font-family: 'Inter', serif;
     font-style: normal;

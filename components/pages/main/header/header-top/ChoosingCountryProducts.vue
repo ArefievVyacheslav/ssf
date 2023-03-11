@@ -29,7 +29,7 @@ import IconRuCountry from "@/components/ui/icons/country/IconRuCountry.vue";
 import IconKzCountry from "@/components/ui/icons/country/IconKzCountry.vue";
 import IconRbCountry from "@/components/ui/icons/country/IconRbCountry.vue";
 import DropDown from "@/components/ui/blocks/DropDown.vue";
-import IconTooltip from "@/components/ui/icons/IconTooltip.vue";
+import IconTooltip from "@/components/ui/icons/IconTooltipQuestion.vue";
 import IconCheckMarkBlue from "@/components/ui/icons/IconCheckMarkBlue.vue";
 import IconAmCountry from "@/components/ui/icons/country/IconAmCountry.vue";
 import IconAzCountry from "@/components/ui/icons/country/IconAzCountry.vue";

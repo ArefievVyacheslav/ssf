@@ -4,6 +4,7 @@ export const state = () => ({
   // myFilterObj: {},
   findObj: {},
   sortObj: {},
+  pagination: { page: 1, show: 60 },
   isDisabled: true
 })
 
@@ -23,6 +24,14 @@ export const mutations = {
     [ state.filterObj, state.findObj ].forEach(filterState => Object.keys(filterState).forEach(key => {
       if (key !== 'category' && key !== 'country' && key !== 'delivery' && key !== 'gender' && key !== 'age') delete filterState[ key ]
     }))
+  },
+  RESET_EXTRA_FILTERS: state => {
+    [ state.filterObj, state.findObj ].forEach(filterState => Object.keys(filterState).forEach(key => {
+      const extraFilters = [ 'installment', 'sale', 'shop', 'color', 'brandCountry', 'county', 'season', 'style' ]
+      extraFilters.forEach(filterKey => {
+        if (Object.keys(filterState).includes(filterKey)) delete filterState[ filterKey ]
+      })
+    }))
   }
 }
 
@@ -30,6 +39,7 @@ export const getters = {
   GET_TOTAL_FILTERS: state => ({
     collection: state.collection,
     findObj: state.findObj,
-    sortObj: state.sortObj
+    sortObj: state.sortObj,
+    pagination: state.pagination
   })
 }

@@ -32,9 +32,11 @@ import IconSearchMenuLinks from "@/components/ui/icons/menu-links/IconSearchMenu
 export default {
   name: "ShopFilter",
   components: { IconSearchMenuLinks, Checkbox, IconArrowDownGreyMedium },
+  props: [ 'reset' ],
   data: () => ({
     currentShop: [],
     isShowShopFilter: false,
+    isChangeShop: false,
     init: false
   }),
   computed: {
@@ -44,16 +46,23 @@ export default {
   },
   watch: {
     currentShop (nV) {
-      this.$emit('is-shop', nV.length ? 1 : 0)
       if (nV.length) {
         this.setFilterParam()
         this.setFindParam()
         this.setUrlParam()
+        this.isChangeShop = true
       } else {
         this.unsetFilterParam()
         this.unsetFindParam()
         this.unsetUrlParam()
+        this.isChangeShop = false
       }
+    },
+    reset (nV) {
+      if (nV) this.currentShop = []
+    },
+    isChangeShop (nV) {
+      this.$emit('is-shop', nV ? 1 : 0)
     },
     '$store.state.filters.collection': {
       handler () {
@@ -91,7 +100,7 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '8shop',
+        param: 'h-shop',
         value: this.currentShop.reduce((acc, shopStr, idx) => {
           if (idx !== this.currentShop.length - 1) acc += shopStr.toLowerCase() + '--'
           else acc += shopStr.toLowerCase()
@@ -100,7 +109,7 @@ export default {
       })
     },
     unsetUrlParam () {
-      this.UNSET_URL_PARAM({ param: '8shop' })
+      this.UNSET_URL_PARAM({ param: 'h-shop' })
     },
     resetFilter () {
       this.unsetFilterParam()
@@ -117,7 +126,10 @@ export default {
           }
         })
         if (!shopArr.length) shopArr.push(...this.currentShop)
-        else this.currentShop = shopArr
+        else {
+          this.currentShop = shopArr
+          this.isChangeShop = true
+        }
         if (this.currentShop.length) this.SET_FIND_PARAM({ param: 'shop', value: { $in: this.currentShop } })
       }, 1000)
     },

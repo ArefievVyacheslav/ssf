@@ -105,12 +105,12 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '6price',
+        param: 'e-price',
         value: `from-${ this.startPrice }-to-${ this.endPrice }`
       })
     },
     unsetUrlParam () {
-      this.UNSET_URL_PARAM({ param: '6price' })
+      this.UNSET_URL_PARAM({ param: 'e-price' })
     },
     async setPrice () {
       this.setFilterParam()

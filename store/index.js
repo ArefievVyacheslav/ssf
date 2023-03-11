@@ -1,3 +1,5 @@
+export const state = () => ({})
+
 export const actions = {
   async nuxtServerInit({ commit, dispatch }, ctx) {
     const path = ctx.app.router.history.current.path
@@ -10,3 +12,7 @@ export const actions = {
   //   // dispatch('selects/FETCH_SELECTS')
   // }
 }
+
+export const mutations = {}
+
+export const getters = {}

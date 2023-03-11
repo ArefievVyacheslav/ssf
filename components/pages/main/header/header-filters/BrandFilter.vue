@@ -66,7 +66,7 @@
 import { mapActions, mapMutations } from "vuex";
 import IconArrowDownGreyMedium from "@/components/ui/icons/arrows/IconArrowDownGreyMedium.vue";
 import DropDown from "@/components/ui/blocks/DropDown.vue";
-import IconTooltip from "@/components/ui/icons/IconTooltip.vue";
+import IconTooltip from "@/components/ui/icons/IconTooltipQuestion.vue";
 import IconSearchMenuLinks from "@/components/ui/icons/menu-links/IconSearchMenuLinks.vue";
 import IconCloseSearch from "@/components/ui/icons/IconCloseSearch.vue";
 import Checkbox from "@/components/ui/blocks/Checkbox.vue";
@@ -159,7 +159,7 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '4brand',
+        param: 'c-brand',
         value: this.currentBrandArr.reduce((acc, brand, idx) => {
           if (idx !== this.currentBrandArr.length - 1) acc += brand.toLowerCase().replaceAll(' ', '-') + '--'
           else acc += brand.toLowerCase().replaceAll(' ', '-')
@@ -168,7 +168,7 @@ export default {
       })
     },
     unsetUrlParam () {
-      this.UNSET_URL_PARAM({ param: '4brand' })
+      this.UNSET_URL_PARAM({ param: 'c-brand' })
     },
     resetFilter () {
       this.query = ''

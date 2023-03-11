@@ -39,7 +39,7 @@
 import { mapActions, mapMutations } from "vuex";
 import IconArrowDownGreyMedium from "@/components/ui/icons/arrows/IconArrowDownGreyMedium.vue";
 import DropDown from "@/components/ui/blocks/DropDown.vue";
-import IconTooltip from "@/components/ui/icons/IconTooltip.vue";
+import IconTooltip from "@/components/ui/icons/IconTooltipQuestion.vue";
 import Checkbox from "@/components/ui/blocks/Checkbox.vue";
 
 export default {
@@ -110,7 +110,7 @@ export default {
     },
     setUrlParam () {
       this.SET_URL_PARAM({
-        param: '5size',
+        param: 'd-size',
         value: this.currentSizeArr.reduce((acc, size, idx) => {
           if (idx !== this.currentSizeArr.length - 1) acc += '-' + size.toLowerCase() + '-'
           else acc += '-' + size.toLowerCase() + '-'
@@ -119,7 +119,7 @@ export default {
       })
     },
     unsetUrlParam () {
-      this.UNSET_URL_PARAM({ param: '5size' })
+      this.UNSET_URL_PARAM({ param: 'd-size' })
     },
     resetFilter () {
       this.unsetFilterParam()

@@ -1,7 +1,7 @@
 <template lang="pug">
   label(:key="isChecked" class="toggle-control")
     input(type="checkbox" :checked="isChecked")
-    span(@click.stop="isChecked = !isChecked; $emit('switch-my-data', isChecked)" class="control")
+    span(@click.stop="isChecked = !isChecked" class="control")
 
 </template>
 
@@ -9,7 +9,16 @@
 export default {
   name: "Switcher",
   props: [ 'param' ],
+  inject: [ 'reset' ],
   data: () => ({ isChecked: false }),
+  watch: {
+    isChecked (nV) {
+      this.$emit('switch-my-data', nV)
+    },
+    reset (nV) {
+      if (nV) this.isChecked = !nV
+    }
+  },
   created () {
     if (this.param === 'installment' && this.$route.path.includes('installment')) this.isChecked = true
   }

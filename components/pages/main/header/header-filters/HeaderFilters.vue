@@ -7,6 +7,7 @@
       SizeFilter(:disabled="isDisabled")
       PriceFilter(:disabled="isDisabled")
       ExtraFilter(:disabled="isDisabled")
+      button.filter__btn-search.ml16px.cp(@click="toProductPage") Найти
 
 </template>
 
@@ -25,6 +26,12 @@ export default {
     isDisabled () {
       return this.$store.state.filters.isDisabled
     }
+  },
+  methods: {
+    async toProductPage () {
+      await this.$store.dispatch('products/FETCH_PRODUCTS')
+      this.$router.push(this.$store.getters["catalog/GET_URL"])
+    }
   }
 };
 </script>
@@ -32,6 +39,22 @@ export default {
 <style lang="scss">
   .filter__wrapper {
     background: #EAECF1;
+
+    .filter__btn-search {
+      width: 130px;
+      height: 60px;
+      background: #2D78EA;
+      border-radius: 10px;
+      font-family: 'Inter',serif;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
+      letter-spacing: 0.02em;
+      color: #FFFFFF;
+      border: none;
+      outline: none;
+    }
   }
 
 </style>
