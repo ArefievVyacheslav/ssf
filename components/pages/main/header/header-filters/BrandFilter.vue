@@ -27,7 +27,7 @@
         .filter__options-wrapper(v-if="!query")
           .filter__letter.mb12px(v-for="letterKey,idx in Object.keys(brandOptions)" :key="letterKey") {{ letterKey }}
             .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.cp(
-              v-for="brandStr,idx in brandOptions[ letterKey ]" :key="idx" @click.stop="toggleSubcategory(brandStr)"
+              v-for="brandStr,idx in brandOptions[ letterKey ]" :key="idx" @click.stop="toggleBrand(brandStr)"
               :class="{ 'filter__options-item_active': currentBrandArr.includes(brandStr) }"
             )
               .df.aic
@@ -38,7 +38,7 @@
 
         .filter__options-wrapper(v-else :class="{ mt37px: query }")
           .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.pl10px.cp(
-            v-for="brandStr in brandOptionsSearch" :key="brandStr" @click.stop="toggleSubcategory(brandStr)"
+            v-for="brandStr in brandOptionsSearch" :key="brandStr" @click.stop="toggleBrand(brandStr)"
             :class="{ 'filter__options-item_active': currentBrandArr.includes(brandStr) }"
           )
             .df.aic
@@ -178,9 +178,9 @@ export default {
       this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
       this.FETCH_SELECTS()
     },
-    acceptParameters () {
+    async acceptParameters () {
       this.isShowBrandList = false
-      this.FETCH_SELECTS()
+      await this.FETCH_SELECTS()
       this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
     },
     getBrand () {
@@ -196,7 +196,7 @@ export default {
         this.SET_FILTER_PARAM({ param: 'brand', value: brandArr })
       }, 1000)
     },
-    toggleSubcategory (brandStr) {
+    toggleBrand (brandStr) {
       this.currentBrandArr.includes(brandStr)
         ? this.currentBrandArr.splice(this.currentBrandArr.indexOf(brandStr), 1)
         : this.currentBrandArr.push(brandStr)

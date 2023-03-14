@@ -16,7 +16,7 @@
     .extra-filters__choices(v-if="isShowStyleFilter")
       .dropdown-choice-count.mt12px.mb10px Выбрано: {{ currentStyle.length }}
       .extra-filters__options-wrapper
-        .filter__options-item.filter__options-item-subcategory.df.aic.cp(
+        .filter__options-item.filter__options-item-subCategory.df.aic.cp(
           v-for="styleStr,idx in styleArr" :key="styleStr" @click="toggleStyle(styleStr)"
           :class="{ 'filter__options-item_active': currentStyle.includes(styleStr), 'mt12px mt7px': idx !== 0 }"
         )
@@ -63,6 +63,7 @@ export default {
         this.unsetUrlParam()
         this.isChangeStyle = false
       }
+      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentStyle = []
@@ -143,6 +144,10 @@ export default {
       this.currentStyle.includes(styleStr)
         ? this.currentStyle.splice(this.currentStyle.indexOf(styleStr), 1)
         : this.currentStyle.push(styleStr)
+    },
+    fetchEntriesDebounced () {
+      clearTimeout(this._timerId)
+      this._timerId = setTimeout(this.FETCH_SELECTS, 1000)
     }
   },
   created () {

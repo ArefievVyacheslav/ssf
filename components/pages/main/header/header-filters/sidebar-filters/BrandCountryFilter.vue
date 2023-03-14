@@ -13,7 +13,7 @@
     .extra-filters__choices(v-if="isShowBrandCountryFilter")
       .dropdown-choice-count.mt12px.mb10px Выбрано: {{ currentBrandCountry.length }}
       .extra-filters__options-wrapper
-        .filter__options-item.filter__options-item-subcategory.df.aic.cp(
+        .filter__options-item.filter__options-item-subCategory.df.aic.cp(
           v-for="brandCountryStr,idx in brandCountryArr" :key="brandCountryStr" @click="toggleBrandCountry(brandCountryStr)"
           :class="{ 'filter__options-item_active': currentBrandCountry.includes(brandCountryStr), 'mt12px mt7px': idx !== 0 }"
         )
@@ -60,6 +60,7 @@ export default {
         this.unsetUrlParam()
         this.isChangeBrandCountry = false
       }
+      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentBrandCountry = []
@@ -140,6 +141,10 @@ export default {
       this.currentBrandCountry.includes(brandCountryStr)
         ? this.currentBrandCountry.splice(this.currentBrandCountry.indexOf(brandCountryStr), 1)
         : this.currentBrandCountry.push(brandCountryStr)
+    },
+    fetchEntriesDebounced () {
+      clearTimeout(this._timerId)
+      this._timerId = setTimeout(this.FETCH_SELECTS, 1000)
     }
   },
   created () {

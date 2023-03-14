@@ -30,7 +30,7 @@ export default {
   methods: {
     async toProductPage () {
       await this.$store.dispatch('products/FETCH_PRODUCTS')
-      this.$router.push(this.$store.getters["catalog/GET_URL"])
+      await this.$router.push(this.$store.getters[ "catalog/GET_URL" ])
     }
   }
 };

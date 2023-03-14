@@ -16,7 +16,7 @@
     .extra-filters__choices(v-if="isShowCountyManufactureFilter")
       .dropdown-choice-count.mt12px.mb10px Выбрано: {{ currentCountyManufacture.length }}
       .extra-filters__options-wrapper
-        .filter__options-item.filter__options-item-subcategory.df.aic.cp(
+        .filter__options-item.filter__options-item-subCategory.df.aic.cp(
           v-for="countyManufactureStr,idx in countyManufactureArr" :key="countyManufactureStr" @click="toggleCountyManufacture(countyManufactureStr)"
           :class="{ 'filter__options-item_active': currentCountyManufacture.includes(countyManufactureStr), 'mt12px mt7px': idx !== 0 }"
         )
@@ -63,6 +63,7 @@ export default {
         this.unsetUrlParam()
         this.isChangeCountyManufacture = false
       }
+      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentCountyManufacture = []
@@ -143,6 +144,10 @@ export default {
       this.currentCountyManufacture.includes(countyManufactureStr)
         ? this.currentCountyManufacture.splice(this.currentCountyManufacture.indexOf(countyManufactureStr), 1)
         : this.currentCountyManufacture.push(countyManufactureStr)
+    },
+    fetchEntriesDebounced () {
+      clearTimeout(this._timerId)
+      this._timerId = setTimeout(this.FETCH_SELECTS, 1000)
     }
   },
   created () {

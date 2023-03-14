@@ -16,7 +16,7 @@
     .extra-filters__choices(v-if="isShowSeasonFilter")
       .dropdown-choice-count.mt12px.mb10px Выбрано: {{ currentSeason.length }}
       .extra-filters__options-wrapper
-        .filter__options-item.filter__options-item-subcategory.df.aic.cp(
+        .filter__options-item.filter__options-item-subCategory.df.aic.cp(
           v-for="seasonStr,idx in seasonArr" :key="seasonStr" @click="toggleSeason(seasonStr)"
           :class="{ 'filter__options-item_active': currentSeason.includes(seasonStr), 'mt12px mt7px': idx !== 0 }"
         )
@@ -63,6 +63,7 @@ export default {
         this.unsetUrlParam()
         this.isChangeSeason = false
       }
+      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentSeason = []
@@ -143,6 +144,10 @@ export default {
       this.currentSeason.includes(seasonStr)
         ? this.currentSeason.splice(this.currentSeason.indexOf(seasonStr), 1)
         : this.currentSeason.push(seasonStr)
+    },
+    fetchEntriesDebounced () {
+      clearTimeout(this._timerId)
+      this._timerId = setTimeout(this.FETCH_SELECTS, 1000)
     }
   },
   created () {
