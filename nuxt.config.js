@@ -33,7 +33,7 @@ export default {
     scss: ['~/assets/styles/main.scss']
   },
   plugins: [
-    // { src: '@/plugins/socket', ssr: false }
+    { src: '~/plugins/vue-touch', ssr: false }
   ],
   components: true,
   buildModules: [
@@ -63,7 +63,7 @@ export default {
     timeout: 5000
   },
   axios: {
-    baseURL: isDev ? 'http://localhost:3004' : 'http://api.sales-search.store/',
+    baseURL: 'http://api.sales-search.store/',
   },
   build: {
     optimizeCss: false,

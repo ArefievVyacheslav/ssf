@@ -11,7 +11,7 @@
     .extra-filters__choices(v-if="isShowShopFilter")
       .dropdown-choice-count.mt12px.mb10px Выбрано: {{ currentShop.length }}
       .extra-filters__options-wrapper
-        .filter__options-item.filter__options-item-subcategory.df.aic.cp(
+        .filter__options-item.filter__options-item-subCategory.df.aic.cp(
           v-for="shopStr,idx in shopArr" :key="shopStr" @click="toggleShop(shopStr)"
           :class="{ 'filter__options-item_active': currentShop.includes(shopStr), 'mt12px mt7px': idx !== 0 }"
         )
@@ -57,6 +57,7 @@ export default {
         this.unsetUrlParam()
         this.isChangeShop = false
       }
+      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentShop = []
@@ -137,6 +138,10 @@ export default {
       this.currentShop.includes(shopStr)
         ? this.currentShop.splice(this.currentShop.indexOf(shopStr), 1)
         : this.currentShop.push(shopStr)
+    },
+    fetchEntriesDebounced () {
+      clearTimeout(this._timerId)
+      this._timerId = setTimeout(this.FETCH_SELECTS, 1000)
     }
   },
   created () {

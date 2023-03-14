@@ -43,13 +43,13 @@ export const actions = {
 
         const { data } = await this.$axios.post('/selects', filtersObj)
         // получаю подкатегории если есть
-        const subcatArr = []
-        data.subcat.forEach(subcatObj => {
-          if (path.includes(subcatObj?.subcategory_t.toLowerCase())) {
-            subcatArr.push(subcatObj)
+        const subCatArr = []
+        data.subCat.forEach(subCatObj => {
+          if (path.includes(subCatObj?.subcategory_t.toLowerCase())) {
+            subCatArr.push(subCatObj)
           }
         })
-        if (subcatArr.length) filtersObj.findObj.subcategory = { $in: subcatArr.map(currentSubcatObj => currentSubcatObj.subcategory) }
+        if (subCatArr.length) filtersObj.findObj.subCategory = { $in: subCatArr.map(currentSubcatObj => currentSubcatObj.subCategory) }
         // получаю бренды если есть
         const brandArr = []
         data.brand.forEach(brandStr => {

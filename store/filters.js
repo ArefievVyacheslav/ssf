@@ -5,6 +5,7 @@ export const state = () => ({
   findObj: {},
   sortObj: {},
   pagination: { page: 1, show: 60 },
+  currency: 'rub',
   isDisabled: true
 })
 
@@ -19,6 +20,8 @@ export const mutations = {
   // UNSET_MY_FILTER_PARAM: (state, paramObj) => delete state.myFilterObj[paramObj.param],
   SET_FIND_PARAM: (state, paramObj) => state.findObj[paramObj.param] = paramObj.value,
   UNSET_FIND_PARAM: (state, paramObj) => delete state.findObj[paramObj.param],
+  SET_SORT_PARAM: (state, sortObj) => state.sortObj = { ...sortObj },
+  SET_SHOW_PARAM: (state, showCount) => state.pagination.show = showCount,
   TOGGLE_DISABLED: (state, condition) =>  state.isDisabled = !condition,
   RESET_FILTERS: state => {
     [ state.filterObj, state.findObj ].forEach(filterState => Object.keys(filterState).forEach(key => {
@@ -40,6 +43,7 @@ export const getters = {
     collection: state.collection,
     findObj: state.findObj,
     sortObj: state.sortObj,
-    pagination: state.pagination
+    pagination: state.pagination,
+    currency: state.currency
   })
 }

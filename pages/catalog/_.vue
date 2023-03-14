@@ -7,7 +7,7 @@
 // import { mapActions } from "vuex";
 
 export default {
-  name: "subcategory",
+  name: "subCategory",
   layout: 'default'
   // async fetch () {
   //   await this.FETCH_SELECTS()

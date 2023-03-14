@@ -57,6 +57,7 @@ export default {
     },
     getInstallment () {
       this.isInstallment = this.$route.path.includes('installment')
+      if (this.isInstallment) this.$emit('is-installment', 1)
       this.SET_FIND_PARAM({ param: 'installment', value: this.isInstallment ? true : { $in: [ true, false ] } })
     }
   },

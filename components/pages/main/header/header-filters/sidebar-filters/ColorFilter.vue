@@ -16,7 +16,7 @@
     .extra-filters__choices(v-if="isShowColorFilter")
       .dropdown-choice-count.mt12px.mb10px Выбрано: {{ currentColor.length }}
       .extra-filters__options-wrapper
-        .filter__options-item.filter__options-item-subcategory.df.aic.cp(
+        .filter__options-item.filter__options-item-subCategory.df.aic.cp(
           v-for="colorStr,idx in colorArr" :key="colorStr" @click="toggleColor(colorStr)"
           :class="{ 'filter__options-item_active': currentColor.includes(colorStr), 'mt12px mt7px': idx !== 0 }"
         )
@@ -63,6 +63,7 @@ export default {
         this.unsetUrlParam()
         this.isChangeColor = false
       }
+      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentColor = []
@@ -143,6 +144,10 @@ export default {
       this.currentColor.includes(colorStr)
         ? this.currentColor.splice(this.currentColor.indexOf(colorStr), 1)
         : this.currentColor.push(colorStr)
+    },
+    fetchEntriesDebounced () {
+      clearTimeout(this._timerId)
+      this._timerId = setTimeout(this.FETCH_SELECTS, 1000)
     }
   },
   created () {

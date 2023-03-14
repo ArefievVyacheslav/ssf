@@ -5,6 +5,7 @@
     HeaderMiddleFirstView(v-if="isShowHeaderFirstView")
     HeaderMyData(v-else)
     HeaderFilters
+    HeaderSortLine
 
 </template>
 
@@ -14,10 +15,11 @@ import MenuLinks from "@/components/pages/main/header/header-second-line/MenuLin
 import HeaderMiddleFirstView from "@/components/pages/main/header/HeaderMiddleFirstView.vue";
 import HeaderFilters from "@/components/pages/main/header/header-filters/HeaderFilters.vue";
 import HeaderMyData from "@/components/pages/main/header/HeaderMyData.vue";
+import HeaderSortLine from "@/components/pages/main/header/HeaderSortLine.vue";
 
 export default {
   name: 'HeaderMain',
-  components: { HeaderMyData, HeaderFilters, HeaderMiddleFirstView, MenuLinks, MenuTop },
+  components: { HeaderSortLine, HeaderMyData, HeaderFilters, HeaderMiddleFirstView, MenuLinks, MenuTop },
   computed: {
     isShowHeaderFirstView () {
       return this.$store.state.statistic.isFirstView || this.$route.path === '/'
@@ -25,7 +27,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -11,7 +11,7 @@
     .extra-filters__choices(v-if="isShowSaleSizeFilter")
       .dropdown-choice-count.mt12px.mb10px Выбрано: {{ currentSaleSize.length }}
       .extra-filters__options-wrapper
-        .filter__options-item.filter__options-item-subcategory.df.aic.cp(
+        .filter__options-item.filter__options-item-subCategory.df.aic.cp(
           v-for="saleObj,idx in saleSizeOptions" :key="saleObj.text" @click="toggleSaleSize(saleObj)"
           :class="{ 'filter__options-item_active': currentSaleSize.includes(saleObj), 'mt12px mt7px': idx !== 0 }"
         )
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import IconArrowDownGreyMedium from "@/components/ui/icons/arrows/IconArrowDownGreyMedium.vue";
 import Checkbox from "@/components/ui/blocks/Checkbox.vue";
 
@@ -60,6 +60,7 @@ export default {
         this.unsetFindParam()
         this.isChangeSaleSize = false
       }
+      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentSaleSize = []
@@ -77,6 +78,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions('selects', [ 'FETCH_SELECTS' ]),
     ...mapMutations('filters', [ 'SET_FILTER_PARAM', 'UNSET_FILTER_PARAM', 'SET_FIND_PARAM', 'UNSET_FIND_PARAM' ]),
     ...mapMutations('catalog', [ 'SET_URL_PARAM', 'UNSET_URL_PARAM' ]),
     setFilterParam () {
@@ -127,6 +129,10 @@ export default {
           if (!this.currentSaleSize.includes(saleSizeObj)) this.currentSaleSize.push(saleSizeObj)
         }
       })
+    },
+    fetchEntriesDebounced () {
+      clearTimeout(this._timerId)
+      this._timerId = setTimeout(this.FETCH_SELECTS, 1000)
     }
   },
   created () {
