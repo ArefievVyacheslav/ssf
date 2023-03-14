@@ -1,14 +1,14 @@
 <template lang="pug">
   .filter__item.filter__item_subcategory.pos-rel.df.jcsb.aic.cp(
-    @click="isShowsubcategoryList = !isShowsubcategoryList" :class="{ 'filter__item_hover': !disabled, 'cnd': disabled }"
+    @click="isShowSubcategoryList = !isShowSubcategoryList" :class="{ 'filter__item_hover': !disabled, 'cnd': disabled }"
   )
     h3.filter__name.filter__name_gender(:class="{ disabled }") Категория
-    .number-selected-options.pos-abs.ml78px(v-if="currentsubcategoryArr.length") {{ currentsubcategoryArr.length }}
+    .number-selected-options.pos-abs.ml78px(v-if="currentSubcategoryArr.length") {{ currentSubcategoryArr.length }}
     IconArrowDownGreyMedium.menu-links__icon-arrow-down.ml19px(
-      :disabled="disabled" :class="{ 'menu-links__icon-arrow-down-active': isShowsubcategoryList && !disabled }"
+      :disabled="disabled" :class="{ 'menu-links__icon-arrow-down-active': isShowSubcategoryList && !disabled }"
     )
-    .filter__dropdown.pos-abs(v-if="isShowsubcategoryList && !disabled")
-      DropDown(@close="isShowsubcategoryList = false" :styles="{ padding: '16px 20px 20px 20px', 'width': '263px' }")
+    .filter__dropdown.pos-abs(v-if="isShowSubcategoryList && !disabled")
+      DropDown(@close="isShowSubcategoryList = false" :styles="{ padding: '16px 20px 20px 20px', 'width': '263px' }")
         .df.aic
           span.dropdown-header.toe.wsn.oh Выбор категории
           IconTooltip#tooltip-dropdown-language.ml6px
@@ -23,32 +23,32 @@
             IconCloseSearch.pos-abs.t7px.r8px
 
         .dropdown-choice-count.mt12px.mb10px(v-if="query && !subcategoryOptionsSearch.length") Ничего не найдено
-        .dropdown-choice-count.mt12px.mb10px(v-else) Выбрано: {{ currentsubcategoryArr.length }}
+        .dropdown-choice-count.mt12px.mb10px(v-else) Выбрано: {{ currentSubcategoryArr.length }}
 
         .filter__options-wrapper(v-if="!query")
           .filter__letter.mb12px(v-for="letterKey,idx in Object.keys(subcategoryOptions)" :key="letterKey") {{ letterKey }}
             .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.cp(
               v-for="subCatObj,idx in subcategoryOptions[ letterKey ]" :key="idx" @click.stop="togglesubcategory(subCatObj)"
-              :class="{ 'filter__options-item_active': currentsubcategoryArrNameRus.includes(subCatObj.subcategory) }"
+              :class="{ 'filter__options-item_active': currentSubcategoryArrNameRus.includes(subCatObj.subcategory) }"
             )
               .df.aic
-                Checkbox(:is-checked="currentsubcategoryArrNameRus.includes(subCatObj.subcategory)" styles="top: 3px; left: 3px;")
-                span.gender__name.ml8px(:class="{ 'gender__name_active': currentsubcategoryArrNameRus.includes(subCatObj.subcategory) }") {{ subCatObj.subcategory }}
+                Checkbox(:is-checked="currentSubcategoryArrNameRus.includes(subCatObj.subcategory)" styles="top: 3px; left: 3px;")
+                span.gender__name.ml8px(:class="{ 'gender__name_active': currentSubcategoryArrNameRus.includes(subCatObj.subcategory) }") {{ subCatObj.subcategory }}
 
           .dropdown-choice-count.mt12px.mb10px(v-if="isActiveFilter && $store.state.selects.selects?.subCat.length") Чтобы увидеть другие категории нажмите «Сбросить»
 
         .filter__options-wrapper(v-else)
           .filter__options-item.filter__options-item-subcategory.df.aic.mt7px.pl10px.cp(
             v-for="subCatObj in subcategoryOptionsSearch" :key="subCatObj.subcategory" @click.stop="togglesubcategory(subCatObj)"
-            :class="{ 'filter__options-item_active': currentsubcategoryArrNameRus.includes(subCatObj.subcategory) }"
+            :class="{ 'filter__options-item_active': currentSubcategoryArrNameRus.includes(subCatObj.subcategory) }"
           )
             .df.aic
-              Checkbox(:is-checked="currentsubcategoryArrNameRus.includes(subCatObj.subcategory)" styles="top: 3px; left: 3px;")
-              span.gender__name.ml8px(:class="{ 'gender__name_active': currentsubcategoryArrNameRus.includes(subCatObj.subcategory) }") {{ subCatObj.subcategory }}
+              Checkbox(:is-checked="currentSubcategoryArrNameRus.includes(subCatObj.subcategory)" styles="top: 3px; left: 3px;")
+              span.gender__name.ml8px(:class="{ 'gender__name_active': currentSubcategoryArrNameRus.includes(subCatObj.subcategory) }") {{ subCatObj.subcategory }}
 
         .df.g10
           button.filter__dropdown-btn.filter__dropdown-btn-disagree.df.jcc.aic.mt12px.cp(
-            v-if="currentsubcategoryArr.length" @click.stop="currentsubcategoryArr = []; resetFilter()"
+            v-if="currentSubcategoryArr.length" @click.stop="currentSubcategoryArr = []; resetFilter()"
           ) Сбросить
           button.filter__dropdown-btn.filter__dropdown-btn-agree.df.jcc.aic.mt12px.cp(@click.stop="acceptParameters") Готово
 
@@ -69,8 +69,8 @@ export default {
   props: [ 'disabled' ],
   data: () => ({
     query: '',
-    currentsubcategoryArr: [],
-    isShowsubcategoryList: false,
+    currentSubcategoryArr: [],
+    isShowSubcategoryList: false,
     isDisabled: true,
     init: false
   }),
@@ -89,22 +89,22 @@ export default {
     subcategoryOptionsSearch () {
       return this.$store.state.selects.selects.subCat.filter(subCatObj => subCatObj.subcategory.toLowerCase().includes(this.query.toLowerCase()))
     },
-    currentsubcategoryArrNameRus () {
-      return this.currentsubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory)
+    currentSubcategoryArrNameRus () {
+      return this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory)
     },
-    currentsubcategoryArrNameEn () {
-      return this.currentsubcategoryArr.map(currentSubcatObj => currentSubcatObj?.subcategory_t.toLowerCase())
+    currentSubcategoryArrNameEn () {
+      return this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj?.subcategory_t.toLowerCase())
     },
     isActiveFilter () {
       return this.$store.state.selects.selects?.subCat
-        ? (this.currentsubcategoryArr.length === this.$store.state.selects.selects.subCat.length)
-          && this.currentsubcategoryArr.map(subCatObj => subCatObj.subcategory)
+        ? (this.currentSubcategoryArr.length === this.$store.state.selects.selects.subCat.length)
+          && this.currentSubcategoryArr.map(subCatObj => subCatObj.subcategory)
             .every(el => this.$store.state.selects.selects.subCat.map(subCatObj => subCatObj.subcategory).includes(el))
         : false
     }
   },
   watch: {
-    currentsubcategoryArr (nV) {
+    currentSubcategoryArr (nV) {
       if (nV.length) {
         this.setFilterParam()
         this.setFindParam()
@@ -117,12 +117,12 @@ export default {
     },
     '$store.state.filters.collection': {
       handler () {
-        if (this.init) this.currentsubcategoryArr = []
+        if (this.init) this.currentSubcategoryArr = []
       }
     },
     '$store.state.filters.filterObj': {
       handler () {
-        if (this.init) this.currentsubcategoryArr = []
+        if (this.init) this.currentSubcategoryArr = []
       },
       deep: true
     }
@@ -134,7 +134,7 @@ export default {
     setFilterParam () {
       this.SET_FILTER_PARAM({
         param: 'subcategory',
-        value: this.currentsubcategoryArr.length ? this.currentsubcategoryArrNameRus : []
+        value: this.currentSubcategoryArr.length ? this.currentSubcategoryArrNameRus : []
       })
     },
     unsetFilterParam () {
@@ -143,7 +143,7 @@ export default {
     setFindParam () {
       this.SET_FIND_PARAM({
         param: 'subcategory',
-        value: { $in: this.currentsubcategoryArrNameRus }
+        value: { $in: this.currentSubcategoryArrNameRus }
       })
     },
     unsetFindParam () {
@@ -152,8 +152,8 @@ export default {
     setUrlParam () {
       this.SET_URL_PARAM({
         param: 'b-subcategory',
-        value: this.currentsubcategoryArrNameEn.reduce((acc, subCatT, idx) => {
-          if (idx !== this.currentsubcategoryArrNameEn.length - 1) acc += subCatT + '--'
+        value: this.currentSubcategoryArrNameEn.reduce((acc, subCatT, idx) => {
+          if (idx !== this.currentSubcategoryArrNameEn.length - 1) acc += subCatT + '--'
           else acc += subCatT
           return acc
         }, '')
@@ -171,7 +171,7 @@ export default {
       this.FETCH_SELECTS()
     },
     acceptParameters () {
-      this.isShowsubcategoryList = false
+      this.isShowSubcategoryList = false
       this.FETCH_SELECTS()
       this.SET_FIND_PARAM({ param: 'price', value: { $in: [ 1, 999999 ] } })
     },
@@ -183,15 +183,15 @@ export default {
             subCatArr.push(subCatObj)
           }
         })
-        if (!subCatArr.length) subCatArr.push(...this.currentsubcategoryArr)
-        else this.currentsubcategoryArr = subCatArr
+        if (!subCatArr.length) subCatArr.push(...this.currentSubcategoryArr)
+        else this.currentSubcategoryArr = subCatArr
         this.SET_FILTER_PARAM({ param: 'subcategory', value: subCatArr })
       }, 1000)
     },
     togglesubcategory (subCatObj) {
-      this.currentsubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory).includes(subCatObj.subcategory)
-        ? this.currentsubcategoryArr.splice(this.currentsubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory).indexOf(subCatObj.subcategory), 1)
-        : this.currentsubcategoryArr.push(subCatObj)
+      this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory).includes(subCatObj.subcategory)
+        ? this.currentSubcategoryArr.splice(this.currentSubcategoryArr.map(currentSubcatObj => currentSubcatObj.subcategory).indexOf(subCatObj.subcategory), 1)
+        : this.currentSubcategoryArr.push(subCatObj)
     }
   },
   created () {

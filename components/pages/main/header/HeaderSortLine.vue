@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 import IconSortArrow from "@/components/ui/icons/IconSortArrow.vue";
 
 export default {
@@ -43,8 +43,8 @@ export default {
   }),
   computed: {
     isShowIconArrowDown () {
-      if (Object.keys(this.currentSort)[0] === 'deliveryPrice') {
-        return this.currentSort[ 'deliveryPrice' ] === -1
+      if (Object.keys(this.currentSort)[0] === 'deliveryPrice' || this.currentSort[ 'sale' ] === -1) {
+        return this.currentSort[ 'deliveryPrice' ] === -1 || this.currentSort[ 'sale' ] === -1
       } else {
         return Object.values(this.currentSort)[0] === 1
       }
@@ -54,6 +54,10 @@ export default {
     currentSort: {
       handler (nV) {
         this.SET_SORT_PARAM(nV)
+        this.SET_URL_PARAM({
+          param: 'n-sort',
+          value: this.sort[ Object.keys(this.currentSort)[0] ][ 'url' ]
+        })
       },
       deep: true
     },
@@ -63,11 +67,13 @@ export default {
         param: 'o-show',
         value: this.currentShow !== 60 ? `show-${this.currentShow}` : ''
       })
-      setTimeout(this.FETCH_PRODUCTS, 500)
+      if (this.$route.path.includes('catalog')) setTimeout(async () => {
+        await this.$store.dispatch('products/FETCH_PRODUCTS')
+        this.$router.push(this.$store.getters['catalog/GET_URL'])
+      }, 500)
     }
   },
   methods: {
-    ...mapActions('products', ['FETCH_PRODUCTS']),
     ...mapMutations('filters', ['SET_SORT_PARAM', 'SET_SHOW_PARAM']),
     ...mapMutations('catalog', [ 'SET_URL_PARAM', 'UNSET_URL_PARAM' ]),
     setSortParam (sortKey) {
@@ -77,7 +83,7 @@ export default {
       }
       else {
         this.currentSort = {}
-        if (sortKey === 'deliveryPrice') {
+        if (sortKey === 'deliveryPrice' || sortKey === 'sale') {
           this.$set(this.currentSort, sortKey, -1)
           this.SET_URL_PARAM({
             param: 'n-sort',
@@ -90,7 +96,10 @@ export default {
             value: this.sort[ sortKey ][ 'url' ]
           })
         }
-        setTimeout(this.FETCH_PRODUCTS, 500)
+        if (this.$route.path.includes('catalog')) setTimeout(async () => {
+          await this.$store.dispatch('products/FETCH_PRODUCTS')
+          this.$router.push(this.$store.getters['catalog/GET_URL'])
+        }, 500)
       }
     },
     setShowCount (showCount) {

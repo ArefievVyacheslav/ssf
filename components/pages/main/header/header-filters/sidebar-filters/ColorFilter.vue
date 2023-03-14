@@ -48,9 +48,15 @@ export default {
   computed: {
     colorArr () {
       return this.$store.state.selects?.selects?.color.concat().sort()
+    },
+    currentColorForWatcher () {
+      return [ ...this.currentColor ]
     }
   },
   watch: {
+    currentColorForWatcher (nV, oV) {
+      if (this.init && JSON.stringify(nV) !== JSON.stringify(oV)) this.fetchEntriesDebounced()
+    },
     currentColor (nV) {
       if (nV.length) {
         this.setFilterParam()
@@ -63,7 +69,6 @@ export default {
         this.unsetUrlParam()
         this.isChangeColor = false
       }
-      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentColor = []

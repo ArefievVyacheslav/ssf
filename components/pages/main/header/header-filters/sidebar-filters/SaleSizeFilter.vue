@@ -47,7 +47,15 @@ export default {
     isChangeSaleSize: false,
     init: false
   }),
+  computed: {
+    currentSaleSizeForWatcher () {
+      return [ ...this.currentSaleSize ]
+    }
+  },
   watch: {
+    currentSaleSizeForWatcher (nV, oV) {
+      if (this.init && JSON.stringify(nV) !== JSON.stringify(oV)) this.fetchEntriesDebounced()
+    },
     currentSaleSize (nV) {
       if (nV.length) {
         this.setUrlParam()
@@ -60,7 +68,6 @@ export default {
         this.unsetFindParam()
         this.isChangeSaleSize = false
       }
-      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentSaleSize = []

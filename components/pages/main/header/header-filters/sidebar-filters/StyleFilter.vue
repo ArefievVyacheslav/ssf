@@ -48,9 +48,15 @@ export default {
   computed: {
     styleArr () {
       return this.$store.state.selects?.selects?.style.concat().sort()
+    },
+    currentStyleForWatcher () {
+      return [ ...this.currentStyle ]
     }
   },
   watch: {
+    currentStyleForWatcher (nV, oV) {
+      if (this.init && JSON.stringify(nV) !== JSON.stringify(oV)) this.fetchEntriesDebounced()
+    },
     currentStyle (nV) {
       if (nV.length) {
         this.setFilterParam()
@@ -63,7 +69,7 @@ export default {
         this.unsetUrlParam()
         this.isChangeStyle = false
       }
-      this.fetchEntriesDebounced()
+      if (this.init) this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentStyle = []

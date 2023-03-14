@@ -45,9 +45,15 @@ export default {
   computed: {
     brandCountryArr () {
       return this.$store.state.selects?.selects?.brandCountry.concat().sort()
+    },
+    currentBrandCountryForWatcher () {
+      return [ ...this.currentBrandCountry ]
     }
   },
   watch: {
+    currentBrandCountryForWatcher (nV, oV) {
+      if (this.init && JSON.stringify(nV) !== JSON.stringify(oV)) this.fetchEntriesDebounced()
+    },
     currentBrandCountry (nV) {
       if (nV.length) {
         this.setFilterParam()
@@ -60,7 +66,6 @@ export default {
         this.unsetUrlParam()
         this.isChangeBrandCountry = false
       }
-      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentBrandCountry = []
