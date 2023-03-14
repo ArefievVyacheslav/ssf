@@ -48,9 +48,15 @@ export default {
   computed: {
     countyManufactureArr () {
       return this.$store.state.selects?.selects?.country.concat().sort()
+    },
+    currentCountyManufactureForWatcher () {
+      return [ ...this.currentCountyManufacture ]
     }
   },
   watch: {
+    currentCountyManufactureForWatcher (nV, oV) {
+      if (this.init && JSON.stringify(nV) !== JSON.stringify(oV)) this.fetchEntriesDebounced()
+    },
     currentCountyManufacture (nV) {
       if (nV.length) {
         this.setFilterParam()
@@ -63,7 +69,6 @@ export default {
         this.unsetUrlParam()
         this.isChangeCountyManufacture = false
       }
-      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentCountyManufacture = []

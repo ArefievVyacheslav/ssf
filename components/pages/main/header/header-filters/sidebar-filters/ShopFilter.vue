@@ -42,9 +42,15 @@ export default {
   computed: {
     shopArr () {
       return this.$store.state.selects?.selects?.shop.concat().sort()
+    },
+    currentShopForWatcher () {
+      return [ ...this.currentShop ]
     }
   },
   watch: {
+    currentShopForWatcher (nV, oV) {
+      if (this.init && JSON.stringify(nV) !== JSON.stringify(oV)) this.fetchEntriesDebounced()
+    },
     currentShop (nV) {
       if (nV.length) {
         this.setFilterParam()
@@ -57,7 +63,6 @@ export default {
         this.unsetUrlParam()
         this.isChangeShop = false
       }
-      this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentShop = []

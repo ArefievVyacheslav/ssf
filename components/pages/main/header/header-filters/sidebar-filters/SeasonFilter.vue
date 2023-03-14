@@ -48,9 +48,15 @@ export default {
   computed: {
     seasonArr () {
       return this.$store.state.selects?.selects?.season.concat().sort()
+    },
+    currentSeasonForWatcher () {
+      return [ ...this.currentSeason ]
     }
   },
   watch: {
+    currentSeasonForWatcher (nV, oV) {
+      if (this.init && JSON.stringify(nV) !== JSON.stringify(oV)) this.fetchEntriesDebounced()
+    },
     currentSeason (nV) {
       if (nV.length) {
         this.setFilterParam()
@@ -63,7 +69,7 @@ export default {
         this.unsetUrlParam()
         this.isChangeSeason = false
       }
-      this.fetchEntriesDebounced()
+      if (this.init) this.fetchEntriesDebounced()
     },
     reset (nV) {
       if (nV) this.currentSeason = []
